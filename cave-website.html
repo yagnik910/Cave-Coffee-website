@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cave Coffee — Carved into the everyday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  /* ============ TOKENS ============ */
+  :root{
+    --cave-shadow:#16120F;
+    --cave-shadow-2:#1F1A15;
+    --stone-umber:#3D352C;
+    --stone-tan:#8B7355;
+    --bulb-amber:#D9A859;
+    --bulb-amber-soft:#C9A876;
+    --limestone:#E8DFD0;
+    --paper:#F2EBD9;
+    --paper-dim:#E3D9C2;
+    --ink:#221C16;
+    --ink-soft:#5C5246;
+    --line:rgba(34,28,22,0.14);
+    --line-dark:rgba(232,223,208,0.14);
+
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+
+    --radius-blob: 38% 62% 58% 42% / 48% 40% 60% 52%;
+
+    /* Menu theme accents */
+    --theme-ember:#C9683C;
+    --theme-ember-tint:#F4E3D6;
+    --theme-glacier:#5B7B8C;
+    --theme-glacier-tint:#DFE7E9;
+    --theme-botanical:#7A8B5C;
+    --theme-botanical-tint:#E5E9DC;
+    --theme-caramel:#B8895A;
+    --theme-caramel-tint:#F0E2D2;
+    --theme-clay:#9C6B4F;
+    --theme-clay-tint:#EBDFD5;
+    --theme-char:#6B4530;
+    --theme-char-tint:#E3D6CB;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  :focus-visible{
+    outline:2px solid var(--bulb-amber);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .wrap{max-width:1180px; margin:0 auto; padding-left:24px; padding-right:24px;}
+
+  /* ============ NAV ============ */
+  .topnav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(22,18,15,0.0);
+    transition:background .4s ease, backdrop-filter .4s ease, box-shadow .4s ease;
+  }
+  .topnav.scrolled{
+    background:rgba(22,18,15,0.92);
+    backdrop-filter:blur(10px);
+    box-shadow:0 1px 0 var(--line-dark);
+  }
+  .topnav-inner{
+    max-width:1180px; margin:0 auto; padding:18px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:var(--font-display);
+    font-size:22px; font-weight:600; letter-spacing:0.01em;
+    color:var(--limestone);
+    display:flex; align-items:center; gap:11px;
+  }
+  .brand .dot{
+    width:30px; height:30px;
+    border-radius:50%;
+    background-image:url("cave-logo-mark.png");
+    background-size:cover;
+    background-position:center;
+    box-shadow:0 0 8px 2px var(--bulb-amber-soft);
+    flex-shrink:0;
+  }
+  @media (max-width: 380px){
+    .brand .dot{ width:24px; height:24px; }
+  }
+  .nav-links{display:flex; gap:32px; align-items:center;}
+  .nav-links a{
+    color:var(--limestone); opacity:0.78;
+    font-size:14px; letter-spacing:0.02em;
+    transition:opacity .25s ease;
+    margin-left:16px;
+  }
+  .nav-links a:first-child{ margin-left:0; }
+  .nav-links a:hover{opacity:1;}
+  .nav-cta{
+    border:1px solid var(--bulb-amber-soft);
+    color:var(--bulb-amber-soft) !important;
+    opacity:1 !important;
+    padding:8px 18px;
+    border-radius:100px;
+    font-size:13px;
+  }
+  .nav-cta:hover{ background:var(--bulb-amber-soft); color:var(--cave-shadow) !important; }
+
+  @media (max-width: 760px){
+    .nav-links a:not(.nav-cta){ display:none; }
+  }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:flex-end;
+    background:var(--cave-shadow);
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute; inset:0;
+    background-image:url("cave1.png");
+    background-size:cover;
+    background-position:center 32%;
+    filter:saturate(0.92) brightness(0.62);
+    transform:scale(1.04);
+  }
+  .hero-scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(to top, var(--cave-shadow) 2%, rgba(22,18,15,0.45) 42%, rgba(22,18,15,0.15) 65%, rgba(22,18,15,0.55) 100%);
+  }
+
+  /* hanging bulb string — the signature element */
+  .bulb-string{
+    position:absolute; top:0; left:0; width:100%; height:46%;
+    z-index:2; pointer-events:none;
+  }
+  .bulb{
+    position:absolute; top:0;
+    width:2px;
+    background:rgba(217,168,89,0.35);
+  }
+  .bulb::after{
+    content:'';
+    position:absolute; left:50%; bottom:-7px; transform:translateX(-50%);
+    width:13px; height:13px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff3d6, var(--bulb-amber) 60%, #8a5f24 100%);
+    box-shadow:0 0 14px 5px rgba(217,168,89,0.55), 0 0 30px 12px rgba(217,168,89,0.18);
+    animation:flicker var(--flicker-dur, 5.2s) ease-in-out infinite;
+    animation-delay:var(--flicker-delay, 0s);
+  }
+  @keyframes flicker{
+    0%,100%{ opacity:1; }
+    47%{ opacity:0.82; }
+    50%{ opacity:1; }
+    78%{ opacity:0.88; }
+  }
+  .bulb.sway{ animation:sway 7s ease-in-out infinite; transform-origin:top center; }
+  @keyframes sway{
+    0%,100%{ transform:rotate(-1.6deg); }
+    50%{ transform:rotate(1.6deg); }
+  }
+
+  .hero-content{
+    position:relative; z-index:3;
+    width:100%;
+    padding:0 24px 76px;
+  }
+  .hero-inner{ max-width:1180px; margin:0 auto; }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--bulb-amber-soft);
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:''; width:28px; height:1px; background:var(--bulb-amber-soft);
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:600;
+    color:var(--limestone);
+    font-size:clamp(48px, 9vw, 112px);
+    line-height:0.96;
+    letter-spacing:-0.01em;
+    max-width:920px;
+  }
+  .hero h1 em{
+    font-style:italic; font-weight:450; color:var(--bulb-amber-soft);
+  }
+  .hero-sub{
+    margin-top:26px;
+    max-width:480px;
+    font-size:16.5px;
+    line-height:1.65;
+    color:rgba(232,223,208,0.74);
+  }
+  .hero-actions{
+    margin-top:38px;
+    display:flex; gap:14px; flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--font-body);
+    font-weight:500; font-size:14.5px;
+    padding:14px 28px;
+    border-radius:100px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+    cursor:pointer; border:none;
+  }
+  .btn-primary{
+    background:var(--bulb-amber);
+    color:var(--cave-shadow);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); background:#e8bb6e; }
+  .btn-ghost{
+    border:1px solid rgba(232,223,208,0.34);
+    color:var(--limestone);
+    background:transparent;
+  }
+  .btn-ghost:hover{ border-color:var(--bulb-amber-soft); color:var(--bulb-amber-soft); transform:translateY(-2px); }
+
+  .scroll-cue{
+    position:absolute; bottom:28px; right:28px; z-index:3;
+    color:rgba(232,223,208,0.55);
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.1em;
+    text-transform:uppercase;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scroll-cue .line{
+    width:1px; height:34px; background:linear-gradient(to bottom, rgba(232,223,208,0.7), transparent);
+    animation:dripdown 2.2s ease-in-out infinite;
+  }
+  .scroll-cue{
+    display: none;
+  }
+  @keyframes dripdown{
+    0%{ transform:scaleY(0.4); opacity:0.4; transform-origin:top;}
+    50%{ transform:scaleY(1); opacity:1; transform-origin:top;}
+    100%{ transform:scaleY(0.4); opacity:0.4; transform-origin:top;}
+  }
+  @media (max-width: 600px){ .scroll-cue{ display:none; } }
+
+  /* ============ INTRO STRIP ============ */
+  .intro{
+    background:var(--paper);
+    padding:90px 0 70px;
+    position:relative;
+    overflow:hidden;
+  }
+  .intro::before{
+    content:'';
+    position:absolute; inset:0;
+    opacity:0.5;
+    background-image:
+      radial-gradient(circle at 90% 15%, rgba(139,115,85,0.07) 0, transparent 40%),
+      radial-gradient(circle at 5% 85%, rgba(139,115,85,0.06) 0, transparent 38%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .intro-grid{ position:relative; z-index:1; }
+  .intro-grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:64px;
+    align-items:center;
+  }
+  .intro h2{
+    font-family:var(--font-display);
+    font-weight:450; font-style:italic;
+    font-size:clamp(28px, 3.4vw, 40px);
+    line-height:1.32;
+    color:var(--ink);
+  }
+  .intro h2 strong{ font-style:normal; font-weight:600; }
+  .intro-photos{
+    position:relative;
+    height:380px;
+  }
+  .intro-photos img{
+    position:absolute;
+    border-radius:14px;
+    object-fit:cover;
+    box-shadow:0 24px 50px -18px rgba(22,18,15,0.45);
+  }
+  .ip-1{ width:62%; height:78%; top:0; left:0; z-index:2; border-radius:24px 48px 24px 48px; }
+  .ip-2{ width:50%; height:54%; bottom:0; right:0; z-index:1; border:6px solid var(--paper); border-radius:var(--radius-blob); }
+
+  .intro-stats{
+    display:flex; gap:40px; margin-top:36px;
+    flex-wrap:wrap;
+  }
+  .intro-stats > div{ margin-right:40px; }
+  .intro-stats > div:last-child{ margin-right:0; }
+  .stat-num{
+    font-family:var(--font-display); font-weight:600;
+    font-size:34px; color:var(--stone-umber);
+  }
+  .stat-label{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em;
+    color:var(--ink-soft); text-transform:uppercase; margin-top:4px;
+  }
+
+  @media (max-width: 860px){
+    .intro-grid{ grid-template-columns:1fr; gap:48px; }
+    .intro-photos{ order:-1; height:300px; }
+  }
+
+  /* ============ SPACE / GALLERY ============ */
+  .space{
+    background:var(--cave-shadow-2);
+    padding:100px 0 110px;
+    position:relative;
+  }
+  .section-head{
+    margin-bottom:54px;
+  }
+  .section-eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.16em; text-transform:uppercase;
+    margin-bottom:14px; display:block;
+  }
+  .space .section-eyebrow{ color:var(--bulb-amber-soft); }
+  .space h2{
+    font-family:var(--font-display);
+    font-weight:600; font-size:clamp(32px, 4.2vw, 52px);
+    color:var(--limestone);
+    max-width:600px;
+    line-height:1.08;
+  }
+  .space p.lede{
+    margin-top:18px; max-width:520px; color:rgba(232,223,208,0.62);
+    font-size:15.5px; line-height:1.7;
+  }
+
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    grid-auto-rows:170px;
+    gap:14px;
+  }
+  .gallery img{
+    width:100%; height:100%; object-fit:cover;
+    border-radius:10px;
+    transition:transform .5s ease, filter .5s ease;
+    filter:saturate(0.94);
+  }
+  .gallery a{ display:block; overflow:hidden; border-radius:10px; }
+  .gallery a:hover img{ transform:scale(1.06); filter:saturate(1.05) brightness(1.04); }
+  .g-1{ grid-column:span 2; grid-row:span 2; }
+  .g-2{ grid-column:span 2; grid-row:span 1; }
+  .g-3{ grid-column:span 1; grid-row:span 1; }
+  .g-4{ grid-column:span 1; grid-row:span 1; }
+  .g-5{ grid-column:span 2; grid-row:span 2; }
+  .g-6{ grid-column:span 2; grid-row:span 1; }
+  .g-7{ grid-column:span 2; grid-row:span 1; }
+
+  @media (max-width: 760px){
+    .gallery{ grid-template-columns:repeat(2,1fr); grid-auto-rows:150px; }
+    .g-1,.g-5{ grid-column:span 2; grid-row:span 2; }
+    .g-2,.g-6,.g-7{ grid-column:span 2; grid-row:span 1; }
+    .g-3,.g-4{ grid-column:span 1; }
+  }
+
+  /* ============ MENU ============ */
+  .menu-section{
+    background:var(--paper);
+    padding:100px 0 60px;
+    position:relative;
+    overflow:hidden;
+  }
+  .menu-section::before{
+    content:'';
+    position:absolute; inset:0;
+    opacity:0.6;
+    background-image:
+      radial-gradient(circle at 8% 10%, rgba(139,115,85,0.08) 0, transparent 45%),
+      radial-gradient(circle at 92% 6%, rgba(139,115,85,0.07) 0, transparent 40%),
+      radial-gradient(circle at 88% 55%, rgba(139,115,85,0.06) 0, transparent 38%),
+      radial-gradient(circle at 10% 65%, rgba(139,115,85,0.07) 0, transparent 42%),
+      radial-gradient(circle at 50% 92%, rgba(139,115,85,0.06) 0, transparent 40%),
+      radial-gradient(circle at 30% 35%, rgba(139,115,85,0.04) 0, transparent 35%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .menu-deco{ display:none; }
+  .menu-head{
+    text-align:center;
+    max-width:640px; margin:0 auto 50px;
+    position:relative; z-index:1;
+  }
+  .menu-head .section-eyebrow{ color:var(--stone-tan); justify-content:center; display:flex; }
+  .menu-head .section-eyebrow::before, .menu-head .section-eyebrow::after{
+    content:''; width:24px; height:1px; background:var(--stone-tan); align-self:center;
+  }
+  .menu-head h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(34px,4.6vw,54px);
+    color:var(--ink);
+  }
+  .menu-head p{
+    margin-top:14px; color:var(--ink-soft); font-size:15.5px; line-height:1.7;
+  }
+
+  .menu-filters{
+    position:sticky; top:0; z-index:50;
+    background:rgba(242,235,217,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:14px 0;
+    margin-bottom:56px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .menu-filters::-webkit-scrollbar{ display:none; }
+  .menu-filters-inner{
+    display:flex; gap:10px;
+    max-width:1180px; margin:0 auto; padding:0 24px;
+    width:max-content;
+    min-width:100%;
+  }
+  .filter-btn{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em;
+    padding:9px 16px;
+    border-radius:100px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    cursor:pointer;
+    transition:all .25s ease;
+  }
+  .filter-btn:hover{ border-color:var(--stone-tan); color:var(--ink); }
+  .filter-btn.active{
+    background:var(--stone-umber);
+    border-color:var(--stone-umber);
+    color:var(--limestone);
+  }
+  .filter-btn[data-theme]{ display:inline-flex; align-items:center; gap:7px; }
+  .filter-btn[data-theme]::before{
+    content:'';
+    width:7px; height:7px; border-radius:50%;
+    flex-shrink:0;
+  }
+  .filter-btn[data-theme="ember"]::before{ background:var(--theme-ember); }
+  .filter-btn[data-theme="glacier"]::before{ background:var(--theme-glacier); }
+  .filter-btn[data-theme="botanical"]::before{ background:var(--theme-botanical); }
+  .filter-btn[data-theme="caramel"]::before{ background:var(--theme-caramel); }
+  .filter-btn[data-theme="clay"]::before{ background:var(--theme-clay); }
+  .filter-btn[data-theme="char"]::before{ background:var(--theme-char); }
+  .filter-btn.active::before{ background:var(--limestone) !important; }
+
+  #menuContainer{
+    position:relative; z-index:1;
+  }
+  .menu-masonry{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+    align-items:start;
+  }
+  .menu-column{ display:flex; flex-direction:column; gap:22px; }
+
+  .menu-category{
+    position:relative;
+    border-radius:18px;
+    padding:26px 26px 18px;
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .menu-category.hidden{ display:none; }
+
+  .menu-category.panel-dark{
+    background:linear-gradient(165deg, var(--cat-accent, var(--stone-umber)) 0%, var(--cave-shadow) 130%);
+    color:var(--limestone);
+    box-shadow:0 18px 36px -16px rgba(22,18,15,0.35);
+  }
+  .panel-dark .cat-head{ border-bottom-color:rgba(232,223,208,0.28); }
+  .panel-dark .cat-head h3{ color:var(--limestone); }
+  .panel-dark .cat-head .cat-count{ color:rgba(232,223,208,0.6); }
+  .panel-dark .cat-icon{ background:rgba(232,223,208,0.14); }
+  .panel-dark .cat-icon svg{ stroke:var(--limestone); }
+  .panel-dark .item-name{ color:var(--limestone); }
+  .panel-dark .item-desc{ color:rgba(232,223,208,0.62); }
+  .panel-dark .item-price{ color:var(--limestone); }
+  .panel-dark .menu-item{ border-bottom-color:rgba(232,223,208,0.16); }
+  .panel-dark .cat-watermark svg{ stroke:rgba(232,223,208,0.9); }
+  .panel-dark .cat-watermark{ opacity:0.16; }
+
+  .menu-category.panel-cream{
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+  }
+  .panel-cream .cat-watermark{ opacity:0.1; }
+
+  .menu-category.panel-boxed{
+    background:transparent;
+    border:1.5px solid var(--cat-accent, var(--stone-umber));
+    padding:24px 24px 16px;
+  }
+  .panel-boxed .cat-watermark{ opacity:0.08; }
+
+  .cat-watermark{
+    position:absolute;
+    right:-10px; bottom:-14px;
+    width:170px; height:170px;
+    pointer-events:none;
+    z-index:0;
+  }
+  .cat-watermark svg{
+    width:100%; height:100%;
+    stroke:var(--cat-accent, var(--stone-umber));
+    fill:none; stroke-width:0.75; stroke-linecap:round; stroke-linejoin:round;
+  }
+  @media (max-width: 700px){ .cat-watermark{ width:120px; height:120px; } }
+
+  .cat-head{
+    display:flex; align-items:center; gap:16px;
+    margin-bottom:22px;
+    border-bottom:2px solid var(--cat-accent, var(--line));
+    padding-bottom:14px;
+    position:relative;
+    z-index:1;
+  }
+  .cat-icon{
+    width:44px; height:44px;
+    border-radius:13px;
+    background:var(--cat-tint, var(--paper-dim));
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .cat-icon svg{
+    width:23px; height:23px;
+    stroke:var(--cat-accent, var(--stone-umber));
+    fill:none;
+    stroke-width:1.6;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .cat-head-text{ flex:1; min-width:0; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+  .cat-head h3{
+    font-family:var(--font-display); font-style:italic; font-weight:450;
+    font-size:clamp(20px, 2.4vw, 27px);
+    color:var(--cat-accent, var(--stone-umber));
+    white-space:nowrap;
+  }
+  .cat-head .cat-count{
+    font-family:var(--font-mono); font-size:11px; color:var(--ink-soft);
+    letter-spacing:0.04em;
+  }
+
+  .menu-category[data-theme="ember"]{ --cat-accent:var(--theme-ember); --cat-tint:var(--theme-ember-tint); }
+  .menu-category[data-theme="glacier"]{ --cat-accent:var(--theme-glacier); --cat-tint:var(--theme-glacier-tint); }
+  .menu-category[data-theme="botanical"]{ --cat-accent:var(--theme-botanical); --cat-tint:var(--theme-botanical-tint); }
+  .menu-category[data-theme="caramel"]{ --cat-accent:var(--theme-caramel); --cat-tint:var(--theme-caramel-tint); }
+  .menu-category[data-theme="clay"]{ --cat-accent:var(--theme-clay); --cat-tint:var(--theme-clay-tint); }
+  .menu-category[data-theme="char"]{ --cat-accent:var(--theme-char); --cat-tint:var(--theme-char-tint); }
+
+  .menu-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:2px;
+    position:relative;
+    z-index:1;
+  }
+  .menu-item{
+    display:flex; justify-content:space-between; gap:14px;
+    padding:11px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .menu-item:last-child{ border-bottom:none; }
+  .item-text{ flex:1; min-width:0; }
+  .item-name{
+    font-weight:600; font-size:14.5px; color:var(--ink);
+    letter-spacing:0.01em;
+  }
+  .item-desc{
+    font-size:12.5px; color:var(--ink-soft);
+    line-height:1.5; margin-top:3px;
+  }
+  .item-price{
+    font-family:var(--font-mono); font-size:14px; font-weight:500;
+    color:var(--cat-accent, var(--stone-umber));
+    white-space:nowrap; padding-top:1px;
+  }
+  .item-price::before{ content:'₹'; opacity:0.6; margin-right:1px; font-size:12px; }
+
+  @media (max-width: 760px){
+    .menu-masonry{ grid-template-columns:1fr; }
+    .cat-head{ flex-wrap:wrap; }
+  }
+
+  /* ============ FOOTER ============ */
+  footer{
+    background:var(--cave-shadow);
+    color:var(--limestone);
+    padding:80px 0 36px;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr 1fr;
+    gap:40px;
+    padding-bottom:54px;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .footer-brand .brand{ margin-bottom:16px; }
+  .footer-brand p{
+    color:rgba(232,223,208,0.6); font-size:14px; line-height:1.7; max-width:320px;
+  }
+  .footer-col h4{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--bulb-amber-soft); margin-bottom:18px;
+  }
+  .footer-col p, .footer-col a{
+    display:block; font-size:14.5px; color:rgba(232,223,208,0.72);
+    margin-bottom:10px; line-height:1.6;
+  }
+  .footer-col a:hover{ color:var(--bulb-amber-soft); }
+  .footer-col .footer-contact-link{
+    display:inline-flex; align-items:center; gap:8px;
+    color:rgba(232,223,208,0.72);
+    transition:color .2s ease;
+  }
+  .footer-col .footer-contact-link:hover{ color:var(--bulb-amber-soft); }
+  .footer-col .footer-contact-link svg{
+    width:15px; height:15px; flex-shrink:0;
+    stroke:currentColor; fill:none; stroke-width:1.7;
+    stroke-linecap:round; stroke-linejoin:round;
+    opacity:0.7;
+  }
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:28px; flex-wrap:wrap; gap:12px;
+    font-size:13px; color:rgba(232,223,208,0.42);
+  }
+  @media (max-width:860px){
+    .footer-grid{ grid-template-columns:1fr 1fr; gap:36px; }
+    .footer-brand{ grid-column:span 2; }
+  }
+  @media (max-width:560px){
+    .footer-grid{ grid-template-columns:1fr; }
+    .footer-brand{ grid-column:span 1; }
+  }
+
+</style>
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <nav class="topnav" id="topnav">
+    <div class="topnav-inner">
+      <a href="#top" class="brand"><span class="dot"></span>CAVE COFFEE</a>
+      <div class="nav-links">
+        <a href="#about">The Space</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#menu">Menu</a>
+        <a href="#visit" class="nav-cta">Find Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="top">
+    <div class="hero-bg"></div>
+    <div class="hero-scrim"></div>
+
+    <div class="bulb-string" id="bulbString"></div>
+
+    <div class="hero-content">
+      <div class="hero-inner">
+        <span class="eyebrow">A coffeehouse carved, not built</span>
+        <h1>Step into <em>the&nbsp;cave.</em><br>Stay for the brew.</h1>
+        <p class="hero-sub">Hand-sculpted stone walls, warm bulbs that hang like stalactites, and a menu of over 80 drinks &amp; dishes built for slow mornings and long nights.</p>
+        <div class="hero-actions">
+          <a href="#menu" class="btn btn-primary">View the menu</a>
+          <a href="#about" class="btn btn-ghost">Explore the space</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-cue"><span>Descend</span><span class="line"></span></div>
+  </header>
+
+  <!-- ============ INTRO ============ -->
+  <section class="intro" id="about">
+    <div class="wrap intro-grid">
+      <div>
+        <span class="section-eyebrow" style="color:var(--stone-tan)">The concept</span>
+        <h2>Every wall here was <strong>sculpted by hand</strong> to feel like limestone worn smooth by centuries of water — then we hung lights in it and started serving espresso.</h2>
+        <div class="intro-stats">
+          <div>
+            <div class="stat-num">80+</div>
+            <div class="stat-label">Menu items</div>
+          </div>
+          <div>
+            <div class="stat-num">10</div>
+            <div class="stat-label">Brew &amp; food categories</div>
+          </div>
+          <div>
+            <div class="stat-num">0</div>
+            <div class="stat-label">Straight walls inside</div>
+          </div>
+        </div>
+      </div>
+      <div class="intro-photos">
+        <img class="ip-1" src="cave11.png" alt="The carved stone seating nook at Cave Coffee, lit by warm pendant bulbs">
+        <img class="ip-2" src="cave2.png" alt="A quiet table for two set against the cave's sculpted walls">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY ============ -->
+  <section class="space" id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-eyebrow">Inside the cave</span>
+        <h2>One room, carved into a dozen moods.</h2>
+        <p class="lede">From quiet corner tables to the long communal slab in the back — no two seats here look at the same wall.</p>
+      </div>
+      <div class="gallery">
+        <a class="g-1" href="cave1.png" target="_blank"><img src="cave1.png" alt="Wide view of the cave-carved main hall with hanging bulb lights and guests seated throughout"></a>
+        <a class="g-2" href="cave4.png" target="_blank"><img src="cave4.png" alt="Collage of seating nooks across the cafe"></a>
+        <a class="g-3" href="cave12.png" target="_blank"><img src="cave12.png" alt="String lights hanging from the carved stone ceiling"></a>
+        <a class="g-4" href="cave3.png" target="_blank"><img src="cave3.png" alt="Communal seating beneath the textured stone ceiling"></a>
+        <a class="g-5" href="cave6.png" target="_blank"><img src="cave6.png" alt="Sculpted stone archway opening into the main dining hall"></a>
+        <a class="g-6" href="cave10.png" target="_blank"><img src="cave10.png" alt="Bar area glimpsed through the sculpted archway"></a>
+        <a class="g-7" href="cave11.png" target="_blank"><img src="cave11.png" alt="A quiet corner table set against the cave's sculpted walls"></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MENU ============ -->
+  <section class="menu-section" id="menu">
+
+    <div class="wrap">
+      <div class="menu-head">
+        <span class="section-eyebrow">All prices in ₹</span>
+        <h2>The full spread</h2>
+        <p>Espresso to wood-fired pizza — everything carved out below, sorted the way you'll actually order it.</p>
+      </div>
+    </div>
+
+    <div class="menu-filters">
+      <div class="menu-filters-inner" id="filterBar">
+        <button class="filter-btn active" data-filter="all">Everything</button>
+        <button class="filter-btn" data-filter="hot-coffee" data-theme="ember">Espresso</button>
+        <button class="filter-btn" data-filter="cold-coffee" data-theme="glacier">Iced &amp; Cold Brew</button>
+        <button class="filter-btn" data-filter="manual" data-theme="ember">Manual Brews</button>
+        <button class="filter-btn" data-filter="creations" data-theme="botanical">Cave's Creations</button>
+        <button class="filter-btn" data-filter="frappes-matcha" data-theme="glacier">Frappes &amp; Matcha</button>
+        <button class="filter-btn" data-filter="shakes-affogato" data-theme="caramel">Shakes &amp; Affogato</button>
+        <button class="filter-btn" data-filter="mocktails" data-theme="botanical">Mocktails</button>
+        <button class="filter-btn" data-filter="desserts" data-theme="caramel">Desserts</button>
+        <button class="filter-btn" data-filter="food" data-theme="clay">Food</button>
+        <button class="filter-btn" data-filter="pizza-pasta" data-theme="char">Pizza &amp; Pasta</button>
+        <button class="filter-btn" data-filter="extras" data-theme="glacier">Extras</button>
+      </div>
+    </div>
+
+    <div class="wrap" id="menuContainer">
+      <!-- Categories injected by JS -->
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer id="visit">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#top" class="brand"><span class="dot"></span>CAVE COFFEE</a>
+          <p>A hand-carved coffeehouse built for the generation that drinks its coffee slow and photographs it slower. Espresso, cold brew, and a kitchen that doesn't stop at toast.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Hours</h4>
+          <p>Open daily<br>9:00 AM – 1:00 AM</p>
+          <p>Walk-ins welcome.<br>Large groups, call ahead.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Find the cave</h4>
+          <p>
+            Shop 255-257, Laxmi Enclave 2,<br>
+            Opposite Gajera Road,<br>
+            Katargam, Surat,<br>
+            Gujarat 395004, India
+          </p>
+          <a href="tel:+91 63557 14733" class="footer-contact-link" style="margin-top:6px;">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.09 5.18 2 2 0 0 1 5.09 3h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 10.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
+            +91 63557-14733
+          </a>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="#menu">Full menu</a>
+          <a href="#gallery">Photo gallery</a>
+          <a href="#about">Our story</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Cave Coffee. Carved with care.</span>
+        <span>Made for slow mornings.</span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // ---------- Scroll nav background ----------
+  const topnav = document.getElementById('topnav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) topnav.classList.add('scrolled');
+    else topnav.classList.remove('scrolled');
+  }, { passive:true });
+
+  // ---------- Hero bulb string (signature element) ----------
+  (function buildBulbs(){
+    const container = document.getElementById('bulbString');
+    const count = window.innerWidth < 700 ? 9 : 16;
+    const heights = [40,90,55,120,70,100,45,130,60,95,50,115,75,105,40,85];
+    for(let i=0;i<count;i++){
+      const b = document.createElement('div');
+      b.className = 'bulb sway';
+      const leftPct = (i / (count-1)) * 100;
+      const h = heights[i % heights.length];
+      b.style.left = leftPct + '%';
+      b.style.height = h + 'px';
+      b.style.animationDelay = (i * 0.35) + 's';
+      b.style.setProperty('--flicker-delay', (Math.random() * 5).toFixed(2) + 's');
+      b.style.setProperty('--flicker-dur', (4.4 + Math.random() * 2.2).toFixed(2) + 's');
+      container.appendChild(b);
+    }
+  })();
+
+  // ---------- Menu data ----------
+  const MENU = [
+    {
+      id:'hot-coffee', cat:'Hot Coffee', title:'Espresso Echoes', theme:'ember', icon:'cup',
+      items:[
+        {n:'Espresso Shot', p:160},
+        {n:'Cappuccino', p:240},
+        {n:'Cafe Latte', p:240},
+        {n:'Macchiato', p:190},
+        {n:'Romano', p:170},
+        {n:'Piccolo', p:190},
+        {n:'Cafe Mocha', p:260},
+        {n:'Americano', p:180},
+        {n:'Cortado', p:200},
+        {n:'Flat White', p:200},
+        {n:'Bombon', p:240},
+      ]
+    },
+    {
+      id:'cold-coffee', cat:'Cold Coffee', title:'Iced Cave Brews', theme:'glacier', icon:'glass',
+      items:[
+        {n:'Iced Espresso', p:170},
+        {n:'Iced Americano', p:190},
+        {n:'Iced Latte', d:'Vanilla / Hazelnut / Tiramisu', p:260},
+        {n:'Iced Mocha', p:280},
+        {n:'Tonic Espresso', d:'@40 tonic water', p:260},
+        {n:'Cold Brew', d:'@40 tonic water', p:230},
+        {n:'Barrel Cold Brew', d:'@40 tonic water (Whisky / Rum)', p:260},
+        {n:'Vietnamese', p:240},
+        {n:'Coconut Vietnamese', p:280},
+      ]
+    },
+    {
+      id:'manual', cat:'Manual Brews', title:'Manual Brews', theme:'ember', icon:'dripper',
+      items:[
+        {n:'V60 Pour Over', d:'Iced / Hot', p:250},
+        {n:'Aero Press', p:250},
+        {n:'Syphon', p:250},
+        {n:'French Press', p:250},
+        {n:'Clever Dripper', p:250},
+      ]
+    },
+    {
+      id:'creations', cat:"Cave's Creations", title:"Cave's Creations", theme:'botanical', icon:'sprig',
+      items:[
+        {n:'Cold Brew Lemonade', d:"Bold cold brew meets tangy lemonade for a refreshing twist", p:260},
+        {n:'Mazagran', d:'The perfect balance of bitter coffee and tart lemon ice', p:260},
+        {n:'Amrit Elite', d:'A bold cold brew infused with bright tropical notes of cranberry, orange and lemon — refreshing and vibrant', p:330},
+        {n:'Coconut Blast', d:'A tropical twist on espresso, creamy and indulgent with coconut milk', p:300},
+        {n:'Smoking Godfather', d:'Herbed smoked coffee mocktail with cold brew', p:330},
+        {n:'Tarty Coffee with Cold Foam', d:'Pink grapefruit Americano with smooth vanilla foam', p:330},
+        {n:'Honey Berry Americano', d:'A smooth Americano kissed with wild berries and golden honey', p:280},
+        {n:'Lemon Cavern', d:'A botanical chill: cold brew kissed with lemon and a hint of rosemary sprig', p:270},
+        {n:'Nearly Beer', d:'The closest you can get to the rich, malty flavour of beer — without the buzz', p:280},
+      ]
+    },
+    {
+      id:'frappes-matcha', cat:'Frappes', title:'Frappes', theme:'glacier', icon:'blender',
+      items:[
+        {n:'Classic', p:240},
+        {n:'Biscoff', p:280},
+        {n:'Hazelnut', p:280},
+        {n:'Cookie Crunch', p:260},
+        {n:'Tiramisu', p:280},
+        {n:'Butterscotch', p:280},
+      ]
+    },
+    {
+      id:'frappes-matcha', cat:'Matcha', title:'Matcha', theme:'botanical', icon:'leaf',
+      items:[
+        {n:'Matcha Tonic', p:290},
+        {n:'Matcha Latte', p:260},
+        {n:'Coconut Cloud Matcha', p:340},
+        {n:'Strawberry Matcha', p:330},
+        {n:'Mango Matcha', p:320},
+        {n:'Mango Matcha Tonic', p:350},
+      ]
+    },
+    {
+      id:'shakes-affogato', cat:'Affogato', title:'Affogato', theme:'caramel', icon:'scoop',
+      items:[
+        {n:'Classic Affogato', p:240},
+        {n:'Berry Affogato', p:280},
+        {n:'Nutella Affogato', p:280},
+      ]
+    },
+    {
+      id:'shakes-affogato', cat:'Shakes', title:'Shakes', theme:'caramel', icon:'shake',
+      items:[
+        {n:'Oreo', p:260},
+        {n:'Biscoff', p:280},
+        {n:'Brownie', p:280},
+        {n:'Pistachio', p:280},
+        {n:'Rum &amp; Raisin', p:300},
+        {n:'Cookie Crumble Shake', p:300},
+      ]
+    },
+    {
+      id:'mocktails', cat:'Mocktails', title:'Mocktails', theme:'botanical', icon:'cocktail',
+      items:[
+        {n:'Purple Haze', d:'A zesty lemon twist with ginger ale, sweetened with blueberry, strawberry and grenadine — chilled over ice for a refreshing sip', p:320},
+        {n:'Sweet Lips', d:'A refreshing mix of kaffir lime, zesty lemon, sweet strawberry and ginger ale, with a splash of grenadine for a sunset-inspired finish', p:280},
+        {n:'Appleberry Cooler', d:'A refreshing mix of crisp apple green and tangy cranberry, topped with sparkling soda for a bubbly, fruity delight', p:270},
+        {n:'Tahini Colada', d:'A creamy, tropical blend of tahini, pineapple and coconut that offers a smooth, nutty twist on the classic Piña Colada', p:300},
+        {n:'Mint Mojito', d:'A classic mint mojito blends fresh mint, zesty lime and subtle sweetness with sparkling soda for a cool, refreshing sip', p:260},
+        {n:'Berrycloud', d:'A creamy swirl of fresh strawberry and tart...', p:280},
+      ]
+    },
+    {
+      id:'desserts', cat:'Desserts', title:'Desserts', theme:'caramel', icon:'cake',
+      items:[
+        {n:'Mocha Cheesecake', p:310},
+        {n:'Milk Chocolate Caramel', p:310},
+        {n:'Crunchy Hazelnut', p:320},
+        {n:'Cheesecake with Strawberry &amp; Nutella', p:380},
+        {n:'New York Cheesecake', d:'Biscoff / Nutella / Blueberry @70', p:240},
+        {n:'Brownie', d:'Biscoff / Nutella @50', p:200},
+        {n:'Brownie with Icecream', d:'Biscoff / Nutella @50', p:250},
+        {n:'Brownie Bowl', p:360},
+      ]
+    },
+    {
+      id:'extras', cat:'Extras', title:'Extras', theme:'glacier', icon:'bottle',
+      items:[
+        {n:'Iced Teas', d:'Lemon / Peach / Cranberry / Blueberry', p:200},
+        {n:'Seasonal Fresh Juice', d:'Seasonal fruit juices available — please ask for today\u2019s options', p:220},
+        {n:'Hot Chocolate', p:240},
+        {n:'Redbull', p:230},
+        {n:'Gingerale', p:150},
+        {n:'Tonic Water', p:150},
+      ]
+    },
+    {
+      id:'food', cat:'Salads', title:'Salads &amp; Bowls', theme:'clay', icon:'bowlleaf',
+      items:[
+        {n:'Tex-Mex Toss', d:'Kidney beans, corn, jalapeño, bell pepper, nachos', p:420},
+        {n:'Saute Green Cottage Salad', d:'Cottage cheese, veggies, garlic, olive oil', p:430},
+      ]
+    },
+    {
+      id:'food', cat:'Rice Bowls', title:'Rice Bowls', theme:'clay', icon:'bowl',
+      items:[
+        {n:'Burnt Garlic Rice with Cheese Curry', d:'Rice, garlic, creamy cheesy curry, herbs', p:360},
+        {n:'Mexican Rice with Cheese Curry', d:'Rice, beans, creamy cheesy curry, veggies', p:370},
+        {n:'Coriander Curry Rice', d:'Rice, kidney beans, sweet corn, coriander, bell pepper, red curry', p:380},
+        {n:'Mexican Bowl', d:'Rice, beans, cottage cheese, fresh sour cream and exotic veggies', p:480},
+        {n:'Pesto Rice with Green Curry', p:480},
+      ]
+    },
+    {
+      id:'food', cat:'Snacks', title:'Snacks &amp; Sides', theme:'clay', icon:'fries',
+      items:[
+        {n:'Potato Wedges', d:'Salted / Peri Peri', p:'200/230'},
+        {n:'Reloaded Fries', d:'Fries, veggies, cheese dressing', p:320},
+        {n:'Herb Spinach Poppers', d:'Crispy fried poppers made from spinach and cottage cheese', p:340},
+        {n:'Pesto Potato', d:'Crispy fried potato, pesto, garlic, parmesan', p:340},
+        {n:'Quesadillas', p:350},
+        {n:'Zesty Nachos', d:'Nachos, beans, cheese sauce', p:360},
+        {n:'Hand Stretched Garlic Bread', d:'Classic cheese, olive, pepper corn, onion pepper chilli, mushroom, jalapeno, olives', p:390},
+      ]
+    },
+    {
+      id:'food', cat:'Sandwiches', title:'Sandwiches', theme:'clay', icon:'sandwich',
+      items:[
+        {n:'Creamy Mushroom Toast', p:320},
+        {n:'Chilli Cheese Crunch', p:320},
+        {n:'Sriracha Focaccia Sandwich', d:'Sriracha sauce paired with veggies in fresh focaccia bread', p:390},
+        {n:'Pesto Focaccia Sandwich', d:'Pesto sauce paired with veggies in fresh focaccia bread', p:390},
+        {n:'Cottage Crunch Classic', d:'Fried cottage cheese, veggies, spicy mayonnaise', p:410},
+        {n:'Guac on Toast', p:430},
+        {n:'Avocado Veggie Crunchwich', p:450},
+      ]
+    },
+    {
+      id:'pizza-pasta', cat:'Pizza', title:'Pizza', note:'Hand Stretched ₹550 · Thin Crust ₹650', theme:'char', icon:'pizza',
+      items:[
+        {n:'Margherita', d:'Tomato sauce, basil, olive oil, fresh mozzarella'},
+        {n:'Italiano', d:'Cherry tomato, broccoli, zucchini, roasted pepper, fresh mozzarella'},
+        {n:'Garlic Cottage Fusion', d:'Garlic butter, basil, cottage, fresh mozzarella'},
+        {n:'The Tandoor Affair', d:'Tandoor sauce, veggies, cottage cheese, fresh mozzarella'},
+        {n:'Basil &amp; Black', d:'Classic green basil pesto paired with black olives and cherry tomatoes'},
+        {n:'Pomodoro-e-Funghi', d:'Mushroom, cherry tomatoes, sauce, fresh mozzarella'},
+        {n:'The Veggie Barn', d:'Cottage cheese, veggies, mushroom, fresh mozzarella'},
+        {n:'Ceci Creama', d:'Chickpea, onion, fresh mozzarella'},
+      ]
+    },
+    {
+      id:'pizza-pasta', cat:'Pasta', title:'Pasta', theme:'char', icon:'pasta',
+      items:[
+        {n:'Aglio e Olio', d:'Garlic, olive oil, chilli flakes, parsley, spaghetti', p:370},
+        {n:'Mushroom Spinach Pasta', d:'Mushroom, spinach, herbs, olive oil', p:370},
+        {n:'Arrabita', d:'Tomato, garlic, chilli flakes, herbs, olive oil', p:380},
+        {n:'Alla Rosa', d:'Tomato, cream, garlic, herbs, parmesan', p:390},
+        {n:'Alfredo', d:'Cream, butter, garlic, parmesan, herbs', p:420},
+        {n:'Pesto', d:'Basil, olive oil, garlic, cream', p:440},
+      ]
+    },
+    {
+      id:'pizza-pasta', cat:'Hummus &amp; More', title:'Hummus &amp; More', theme:'char', icon:'pita',
+      items:[
+        {n:'Pita Pocket', p:320},
+        {n:'Loaded Hummus with Pita', p:340},
+        {n:'Avocado Hummus Toast', p:360},
+        {n:'Falafel Platter for 2', d:'6 pieces falafel, salad, hummus, labneh, tahini, red chilli', p:800},
+        {n:'Falafel Platter for 4', d:'12 pieces falafel, salad, hummus, labneh, tahini, red chilli', p:1100},
+      ]
+    },
+    {
+      id:'pizza-pasta', cat:'Extras', title:'Bread &amp; Dips', theme:'char', icon:'bread',
+      items:[
+        {n:'Pita Bread', p:60},
+        {n:'Garlic Pita Bread', p:80},
+        {n:'Falafel Bullets (6 pcs)', p:150},
+        {n:'Labneh', p:170},
+        {n:'Hummus', p:200},
+      ]
+    },
+  ];
+
+  // ---------- Icon library ----------
+  const ICONS = {
+    cup: '<path d="M5 8h13v5a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V8Z"/><path d="M18 9h1.5a2 2 0 0 1 0 4H18"/><path d="M9 4c.5.8.5 1.4 0 2M13 4c.5.8.5 1.4 0 2"/>',
+    glass: '<path d="M7 4h10l-1 15a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2L7 4Z"/><path d="M6 4h12"/><path d="M9 9h6M9.5 13h5"/>',
+    dripper: '<path d="M6 5h12l-2 4H8L6 5Z"/><path d="M9 9v3a3 3 0 0 0 6 0V9"/><path d="M5 19h14M8 19v-3M16 19v-3"/>',
+    sprig: '<path d="M12 20V9"/><path d="M12 9c0-3 2-5 5-5-1 3-2 5-5 5Z"/><path d="M12 13c0-3-2-5-5-5 1 3 2 5 5 5Z"/><path d="M9 20h6"/>',
+    blender: '<path d="M8 3h8l-1 9H9L8 3Z"/><path d="M9 12h6l-1 6a2 2 0 0 1-2 2h0a2 2 0 0 1-2-2l-1-6Z"/><path d="M8 3h8"/>',
+    leaf: '<path d="M5 13c0-5 4-9 9-9 1 7-3 13-9 13a8 8 0 0 1 0-4Z"/><path d="M7 19c2-3 4-5 7-9"/>',
+    scoop: '<path d="M9 11a4 4 0 1 1 6.93-2.7"/><circle cx="12" cy="9" r="4"/><path d="M9 13h6l-2 7a1 1 0 0 1-2 0l-2-7Z"/>',
+    shake: '<path d="M8 3h8l-1 16a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2L8 3Z"/><path d="M7 7h10"/><path d="M16 3l2-2M18 3l1.5-1.5"/>',
+    cocktail: '<path d="M5 5h14l-7 8-7-8Z"/><path d="M12 13v7M9 20h6"/><path d="M7.5 7.5h9"/>',
+    cake: '<path d="M4 12 12 4l8 8"/><path d="M5 12v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6"/><path d="M12 4v4"/>',
+    bottle: '<path d="M10 3h4v3l2 2v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V8l2-2V3Z"/><path d="M9 12h6"/>',
+    bowlleaf: '<path d="M4 12h16a8 8 0 0 1-16 0Z"/><path d="M12 12c-1-3 0-5 2-7-2 0-4 1-4 4"/>',
+    bowl: '<path d="M4 12h16a8 8 0 0 1-16 0Z"/><path d="M8 12c0-3 1.5-5 4-6"/>',
+    fries: '<path d="M7 21 6 9h12l-1 12Z"/><path d="M9 9V6M12 9V5M15 9V6"/>',
+    sandwich: '<path d="M4 11h16l-1 3H5l-1-3Z"/><path d="M5 14h14l-1 5H6l-1-5Z"/><path d="M4 11c1-3 4-5 8-5s7 2 8 5"/>',
+    pizza: '<path d="M12 3 3 19h18L12 3Z"/><circle cx="12" cy="13" r="1"/><circle cx="9.5" cy="16" r="1"/><circle cx="14.5" cy="16" r="1"/>',
+    pasta: '<path d="M4 12h16a8 8 0 0 1-16 0Z"/><path d="M7 12c1-3 1-5 0-8M11 12c1-3 1-5 0-8M15 12c1-3 1-5 0-8"/>',
+    pita: '<ellipse cx="12" cy="12" rx="8" ry="5"/><path d="M8 10c1 1 1 3 0 4M16 10c-1 1-1 3 0 4"/>',
+    bread: '<path d="M4 13c0-5 3.5-9 8-9s8 4 8 9v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3Z"/><path d="M9 13v3M12 11v5M15 13v3"/>',
+  };
+
+  // ---------- Render menu ----------
+  const container = document.getElementById('menuContainer');
+
+  const masonry = document.createElement('div');
+  masonry.className = 'menu-masonry';
+  const colLeft = document.createElement('div');
+  colLeft.className = 'menu-column';
+  const colRight = document.createElement('div');
+  colRight.className = 'menu-column';
+  masonry.appendChild(colLeft);
+  masonry.appendChild(colRight);
+  container.appendChild(masonry);
+
+  let leftWeight = 0;
+  let rightWeight = 0;
+  let darkCount = 0;
+
+  MENU.forEach((section, idx) => {
+    const sec = document.createElement('div');
+    sec.className = 'menu-category';
+    sec.dataset.filter = section.id;
+    sec.dataset.theme = section.theme || '';
+
+    const isShort = section.items.length <= 3;
+    if (isShort) {
+      sec.classList.add('panel-boxed');
+    } else if (darkCount % 2 === 0) {
+      sec.classList.add('panel-dark');
+      darkCount++;
+    } else {
+      sec.classList.add('panel-cream');
+      darkCount++;
+    }
+
+    const iconPath = ICONS[section.icon] || ICONS.cup;
+
+    const watermark = document.createElement('div');
+    watermark.className = 'cat-watermark';
+    watermark.innerHTML = `<svg viewBox="0 0 24 24">${iconPath}</svg>`;
+    sec.appendChild(watermark);
+
+    const head = document.createElement('div');
+    head.className = 'cat-head';
+    head.innerHTML = `
+      <div class="cat-icon"><svg viewBox="0 0 24 24">${iconPath}</svg></div>
+      <div class="cat-head-text">
+        <h3>${section.title}</h3>
+        <span class="cat-count">${section.note ? section.note : section.items.length + ' items'}</span>
+      </div>
+    `;
+    sec.appendChild(head);
+
+    const grid = document.createElement('div');
+    grid.className = 'menu-grid';
+
+    section.items.forEach(item => {
+      const row = document.createElement('div');
+      row.className = 'menu-item';
+      const priceHTML = item.p !== undefined
+        ? `<div class="item-price">${item.p}</div>`
+        : '';
+      row.innerHTML = `
+        <div class="item-text">
+          <div class="item-name">${item.n}</div>
+          ${item.d ? `<div class="item-desc">${item.d}</div>` : ''}
+        </div>
+        ${priceHTML}
+      `;
+      grid.appendChild(row);
+    });
+
+    sec.appendChild(grid);
+
+    const weight = 3 + section.items.length;
+    if (leftWeight <= rightWeight) {
+      colLeft.appendChild(sec);
+      leftWeight += weight;
+    } else {
+      colRight.appendChild(sec);
+      rightWeight += weight;
+    }
+  });
+
+  // ---------- Filtering ----------
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const categories = document.querySelectorAll('.menu-category');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      categories.forEach(cat => {
+        if (f === 'all' || cat.dataset.filter === f) {
+          cat.classList.remove('hidden');
+        } else {
+          cat.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
