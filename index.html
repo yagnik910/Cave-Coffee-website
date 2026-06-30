@@ -709,11 +709,11 @@
         <h2>Every wall here was <strong>sculpted by hand</strong> to feel like limestone worn smooth by centuries of water — then we hung lights in it and started serving espresso.</h2>
         <div class="intro-stats">
           <div>
-            <div class="stat-num">80+</div>
+            <div class="stat-num">100+</div>
             <div class="stat-label">Menu items</div>
           </div>
           <div>
-            <div class="stat-num">10</div>
+            <div class="stat-num">14</div>
             <div class="stat-label">Brew &amp; food categories</div>
           </div>
           <div>
@@ -854,37 +854,38 @@
     {
       id:'hot-coffee', cat:'Hot Coffee', title:'Espresso Echoes', theme:'ember', icon:'cup',
       items:[
-        {n:'Espresso Shot', p:160},
-        {n:'Cappuccino', p:240},
-        {n:'Cafe Latte', p:240},
-        {n:'Macchiato', p:190},
-        {n:'Romano', p:170},
-        {n:'Piccolo', p:190},
-        {n:'Cafe Mocha', p:260},
-        {n:'Americano', p:180},
-        {n:'Cortado', p:200},
-        {n:'Flat White', p:200},
-        {n:'Bombon', p:240},
+        {n:'Espresso', p:140},
+        {n:'Americano', p:160},
+        {n:'Cortado', p:180},
+        {n:'Flat White', p:180},
+        {n:'Cappuccino', p:220},
+        {n:'Cafe Latte', p:220},
+        {n:'Cafe Mocha', p:240},
+        {n:'Cardamom Mocha', p:240},
       ]
     },
     {
       id:'cold-coffee', cat:'Cold Coffee', title:'Iced Cave Brews', theme:'glacier', icon:'glass',
       items:[
-        {n:'Iced Espresso', p:170},
-        {n:'Iced Americano', p:190},
-        {n:'Iced Latte', d:'Vanilla / Hazelnut / Tiramisu', p:260},
-        {n:'Iced Mocha', p:280},
-        {n:'Tonic Espresso', d:'@40 tonic water', p:260},
-        {n:'Cold Brew', d:'@40 tonic water', p:230},
-        {n:'Barrel Cold Brew', d:'@40 tonic water (Whisky / Rum)', p:260},
-        {n:'Vietnamese', p:240},
-        {n:'Coconut Vietnamese', p:280},
+        {n:'Iced Espresso', p:150},
+        {n:'Iced Americano', p:160},
+        {n:'Iced Latte', d:'Vanilla / Hazelnut / Tiramisu', p:240},
+        {n:'Iced Mocha', p:260},
+        {n:'Tonic Espresso', p:240},
+        {n:'Cold Brew', d:'Classic / Vanilla / Mint', p:'200/220'},
+        {n:'Tonic Cold Brew', d:'Classic / Vanilla / Mint', p:260},
+        {n:'Vietnamese', p:220},
+        {n:'Bombon', p:220},
+        {n:'Affogato', p:180},
       ]
     },
     {
       id:'manual', cat:'Manual Brews', title:'Manual Brews', theme:'ember', icon:'dripper',
       items:[
-        {n:'V60 Pour Over', d:'Iced / Hot', p:250},
+        {n:'V60 Pour Over', d:'Hot / Iced', p:180},
+        {n:'Coffee Press', d:'Mini / Medium', p:180},
+        {n:'Chemex', p:180},
+        {n:'Siphon', p:180},
         {n:'Aero Press', p:250},
         {n:'Syphon', p:250},
         {n:'French Press', p:250},
@@ -894,10 +895,15 @@
     {
       id:'creations', cat:"Cave's Creations", title:"Cave's Creations", theme:'botanical', icon:'sprig',
       items:[
-        {n:'Cold Brew Lemonade', d:"Bold cold brew meets tangy lemonade for a refreshing twist", p:260},
-        {n:'Mazagran', d:'The perfect balance of bitter coffee and tart lemon ice', p:260},
+        {n:'Cold Brew Lemonade', d:"Bold cold brew meets tangy lemonade for a refreshing twist", p:240},
+        {n:'Smoked Latte', p:280},
+        {n:'Red Eye', p:220},
+        {n:'Toxic Cold Brew', p:280},
+        {n:'Coconut Blast', d:'A tropical twist on espresso, creamy and indulgent with coconut milk', p:250},
+        {n:'Mazagran', d:'The perfect balance of bitter coffee and tart lemon ice', p:240},
+        {n:'Minty Rum Brew', p:280},
+        {n:'Bloody Fusion', p:280},
         {n:'Amrit Elite', d:'A bold cold brew infused with bright tropical notes of cranberry, orange and lemon — refreshing and vibrant', p:330},
-        {n:'Coconut Blast', d:'A tropical twist on espresso, creamy and indulgent with coconut milk', p:300},
         {n:'Smoking Godfather', d:'Herbed smoked coffee mocktail with cold brew', p:330},
         {n:'Tarty Coffee with Cold Foam', d:'Pink grapefruit Americano with smooth vanilla foam', p:330},
         {n:'Honey Berry Americano', d:'A smooth Americano kissed with wild berries and golden honey', p:280},
@@ -908,9 +914,12 @@
     {
       id:'frappes-matcha', cat:'Frappes', title:'Frappes', theme:'glacier', icon:'blender',
       items:[
-        {n:'Classic', p:240},
+        {n:'Classic', p:200},
+        {n:'Cave Special', p:280},
+        {n:'French Vanilla', p:240},
         {n:'Biscoff', p:280},
-        {n:'Hazelnut', p:280},
+        {n:'Hazelnut', p:240},
+        {n:'Mocha', p:240},
         {n:'Cookie Crunch', p:260},
         {n:'Tiramisu', p:280},
         {n:'Butterscotch', p:280},
@@ -941,7 +950,7 @@
         {n:'Oreo', p:260},
         {n:'Biscoff', p:280},
         {n:'Brownie', p:280},
-        {n:'Pistachio', p:280},
+        {n:'Pistachio', p:300},
         {n:'Rum &amp; Raisin', p:300},
         {n:'Cookie Crumble Shake', p:300},
       ]
@@ -954,12 +963,14 @@
         {n:'Appleberry Cooler', d:'A refreshing mix of crisp apple green and tangy cranberry, topped with sparkling soda for a bubbly, fruity delight', p:270},
         {n:'Tahini Colada', d:'A creamy, tropical blend of tahini, pineapple and coconut that offers a smooth, nutty twist on the classic Piña Colada', p:300},
         {n:'Mint Mojito', d:'A classic mint mojito blends fresh mint, zesty lime and subtle sweetness with sparkling soda for a cool, refreshing sip', p:260},
-        {n:'Berrycloud', d:'A creamy swirl of fresh strawberry and tart...', p:280},
+        {n:'Berrycloud', d:'A creamy swirl of fresh strawberry and tart cranberry, softened with sweet condensed milk — light, fruity and perfectly dreamy', p:280},
       ]
     },
     {
       id:'desserts', cat:'Desserts', title:'Desserts', theme:'caramel', icon:'cake',
       items:[
+        {n:'Kunafa Bomb', d:'Crispy outside, creamy inside — bursting with sweet, nutty flavour', p:440},
+        {n:'Tres Leches', d:'Sponge cake drenched in a trio of milks, creating a silky, melt-in-your-mouth texture', p:300},
         {n:'Mocha Cheesecake', p:310},
         {n:'Milk Chocolate Caramel', p:310},
         {n:'Crunchy Hazelnut', p:320},
@@ -984,6 +995,10 @@
     {
       id:'food', cat:'Salads', title:'Salads &amp; Bowls', theme:'clay', icon:'bowlleaf',
       items:[
+        {n:'Tahina Chickpea Salad', d:'Falafel, chickpeas, hummus, tahini', p:240},
+        {n:'Caesar Salad', p:260},
+        {n:'Greek Salad', p:220},
+        {n:'Bosco Salad', p:280},
         {n:'Tex-Mex Toss', d:'Kidney beans, corn, jalapeño, bell pepper, nachos', p:420},
         {n:'Saute Green Cottage Salad', d:'Cottage cheese, veggies, garlic, olive oil', p:430},
       ]
@@ -996,11 +1011,14 @@
         {n:'Coriander Curry Rice', d:'Rice, kidney beans, sweet corn, coriander, bell pepper, red curry', p:380},
         {n:'Mexican Bowl', d:'Rice, beans, cottage cheese, fresh sour cream and exotic veggies', p:480},
         {n:'Pesto Rice with Green Curry', p:480},
+        {n:'Quinoa Bowl', p:410},
+        {n:'Egyptian Koshari Riced', p:320},
       ]
     },
     {
       id:'food', cat:'Snacks', title:'Snacks &amp; Sides', theme:'clay', icon:'fries',
       items:[
+        {n:'French Fries', d:'Salted / Peri Peri', p:'200/230'},
         {n:'Potato Wedges', d:'Salted / Peri Peri', p:'200/230'},
         {n:'Reloaded Fries', d:'Fries, veggies, cheese dressing', p:320},
         {n:'Herb Spinach Poppers', d:'Crispy fried poppers made from spinach and cottage cheese', p:340},
@@ -1008,6 +1026,17 @@
         {n:'Quesadillas', p:350},
         {n:'Zesty Nachos', d:'Nachos, beans, cheese sauce', p:360},
         {n:'Hand Stretched Garlic Bread', d:'Classic cheese, olive, pepper corn, onion pepper chilli, mushroom, jalapeno, olives', p:390},
+        {n:'Loaded French Fries', p:280},
+        {n:'Parmesan and Truffle Fries', p:380},
+        {n:'Loaded Nachos', p:380},
+        {n:'Mexican Beans Taco', p:320},
+        {n:'Mexican Tortilla Hack', p:240},
+        {n:'Beans &amp; Rice Burrito', p:280},
+        {n:'Pesto Burrito', p:280},
+        {n:'Tandoori', p:280},
+        {n:'Al a Muhammara', p:380},
+        {n:'Classic Fries', p:180},
+        {n:'Peri Peri Fries', p:200},
       ]
     },
     {
@@ -1020,40 +1049,52 @@
         {n:'Cottage Crunch Classic', d:'Fried cottage cheese, veggies, spicy mayonnaise', p:410},
         {n:'Guac on Toast', p:430},
         {n:'Avocado Veggie Crunchwich', p:450},
+        {n:'Shrooms &amp; Mozzarella', p:320},
+        {n:'Grilled Pepper Pesto', p:280},
+        {n:'Smokey Cottage Cheese', p:280},
+        {n:'Veggie Tater', p:280},
+        {n:'Avocado Hummus Toast', p:360},
+        {n:'Hummy Toast', p:260},
       ]
     },
     {
-      id:'pizza-pasta', cat:'Pizza', title:'Pizza', note:'Hand Stretched ₹550 · Thin Crust ₹650', theme:'char', icon:'pizza',
+      id:'pizza-pasta', cat:'Pizza', title:'12" Hand Stretched Pizza', theme:'char', icon:'pizza',
       items:[
-        {n:'Margherita', d:'Tomato sauce, basil, olive oil, fresh mozzarella'},
-        {n:'Italiano', d:'Cherry tomato, broccoli, zucchini, roasted pepper, fresh mozzarella'},
-        {n:'Garlic Cottage Fusion', d:'Garlic butter, basil, cottage, fresh mozzarella'},
-        {n:'The Tandoor Affair', d:'Tandoor sauce, veggies, cottage cheese, fresh mozzarella'},
-        {n:'Basil &amp; Black', d:'Classic green basil pesto paired with black olives and cherry tomatoes'},
-        {n:'Pomodoro-e-Funghi', d:'Mushroom, cherry tomatoes, sauce, fresh mozzarella'},
-        {n:'The Veggie Barn', d:'Cottage cheese, veggies, mushroom, fresh mozzarella'},
-        {n:'Ceci Creama', d:'Chickpea, onion, fresh mozzarella'},
+        {n:'Margherita', d:'Cave\u2019s tomato sauce, basil, mozzarella', p:340},
+        {n:'Bufala Margherita', d:'Cave\u2019s tomato sauce, basil, blue cheese', p:410},
+        {n:'Crema di Tartufo', d:'Funghi sauce, hot sauce, potato slivers, spinach crisp, topped with parmesan &amp; truffle oil', p:550},
+        {n:'Artichoke &amp; Chimichurri', d:'Cave\u2019s tomato sauce, artichoke, sundried tomato, chimichurri, topped with parmesan &amp; ricotta', p:510},
+        {n:'Jerk Paneer', d:'Cave\u2019s tomato sauce, homemade jerk spiced BBQ paneer, topped with rocket &amp; burrata', p:510},
+        {n:'Garlic Cottage Fusion', d:'Garlic butter, basil, cottage, fresh mozzarella', p:420},
+        {n:'The Tandoor Affair', d:'Tandoor sauce, veggies, cottage cheese, fresh mozzarella', p:430},
+        {n:'Basil &amp; Black', d:'Classic green basil pesto paired with black olives and cherry tomatoes', p:430},
+        {n:'Pomodoro-e-Funghi', d:'Mushroom, cherry tomatoes, sauce, fresh mozzarella', p:430},
+        {n:'The Veggie Barn', d:'Cottage cheese, veggies, mushroom, fresh mozzarella', p:430},
+        {n:'Ceci Creama', d:'Chickpea, onion, fresh mozzarella', p:430},
+        {n:'Italiano', d:'Cherry tomato, broccoli, zucchini, roasted pepper, fresh mozzarella', p:380},
       ]
     },
     {
-      id:'pizza-pasta', cat:'Pasta', title:'Pasta', theme:'char', icon:'pasta',
+      id:'pizza-pasta', cat:'Pasta', title:'Pasta', note:'Choice of Pasta: Penne / Spaghetti / Fettuccine / Fusilli', theme:'char', icon:'pasta',
       items:[
-        {n:'Aglio e Olio', d:'Garlic, olive oil, chilli flakes, parsley, spaghetti', p:370},
+        {n:'Spaghetti Aglio e Olio', d:'Garlic, olive oil, chilli flakes, parsley', p:360},
+        {n:'Alfredo', d:'Cream, butter, garlic, parmesan, herbs', p:360},
+        {n:'Pasta Verdure Bolognese', p:380},
+        {n:'Linguine Pasta', p:360},
+        {n:'Pesto Pasta', d:'Basil, olive oil, garlic, cream', p:360},
         {n:'Mushroom Spinach Pasta', d:'Mushroom, spinach, herbs, olive oil', p:370},
         {n:'Arrabita', d:'Tomato, garlic, chilli flakes, herbs, olive oil', p:380},
         {n:'Alla Rosa', d:'Tomato, cream, garlic, herbs, parmesan', p:390},
-        {n:'Alfredo', d:'Cream, butter, garlic, parmesan, herbs', p:420},
-        {n:'Pesto', d:'Basil, olive oil, garlic, cream', p:440},
       ]
     },
     {
       id:'pizza-pasta', cat:'Hummus &amp; More', title:'Hummus &amp; More', theme:'char', icon:'pita',
       items:[
+        {n:'Bullet Bowl', p:300},
         {n:'Pita Pocket', p:320},
-        {n:'Loaded Hummus with Pita', p:340},
-        {n:'Avocado Hummus Toast', p:360},
-        {n:'Falafel Platter for 2', d:'6 pieces falafel, salad, hummus, labneh, tahini, red chilli', p:800},
-        {n:'Falafel Platter for 4', d:'12 pieces falafel, salad, hummus, labneh, tahini, red chilli', p:1100},
+        {n:'Loaded Hummus with Poi', p:340},
+        {n:'Falafel Platter for 2', d:'Aubaine falafel, salad, hummus, labneh, tahini, red chilli', p:800},
+        {n:'Falafel Platter for 4', d:'Chunks falafel, salad, hummus, labneh, tahini, red chilli', p:1100},
       ]
     },
     {
