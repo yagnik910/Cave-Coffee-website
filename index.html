@@ -648,6 +648,133 @@
     stroke-linecap:round; stroke-linejoin:round;
     opacity:0.7;
   }
+  .footer-contact-btn{
+    background:transparent;
+    border:none;
+    padding:6px 8px 6px 0;
+    margin-left:-2px;
+    border-radius:8px;
+    font-family:var(--font-body);
+    font-size:14.5px;
+    cursor:pointer;
+    text-align:left;
+  }
+  .footer-contact-btn:hover,
+  .footer-contact-btn:focus-visible{
+    background:rgba(217,168,89,0.08);
+  }
+
+  /* ---- Clickable address (opens the map-choice popover) ---- */
+  .footer-address-btn{
+    display:flex; align-items:flex-start; gap:9px;
+    width:100%;
+    text-align:left;
+    background:transparent;
+    border:none;
+    border-radius:10px;
+    padding:8px 10px 8px 0;
+    margin:0 0 4px -2px;
+    cursor:pointer;
+    font-family:var(--font-body);
+    color:rgba(232,223,208,0.72);
+    transition:color .2s ease, background .2s ease;
+  }
+  .footer-address-btn:hover,
+  .footer-address-btn:focus-visible{
+    color:var(--bulb-amber-soft);
+    background:rgba(217,168,89,0.08);
+  }
+  .footer-address-text{
+    font-size:14.5px; line-height:1.6;
+  }
+  .footer-address-icon{
+    width:16px; height:16px; flex-shrink:0;
+    margin-top:2px;
+    stroke:currentColor; fill:none; stroke-width:1.7;
+    stroke-linecap:round; stroke-linejoin:round;
+    opacity:0.65;
+  }
+
+  /* ---- Map choice popover ---- */
+  .map-popover-backdrop{
+    position:fixed; inset:0;
+    background:rgba(13,10,8,0.45);
+    z-index:998;
+  }
+  .map-popover{
+    position:fixed;
+    z-index:999;
+    width:240px;
+    background:var(--cave-shadow-2);
+    border:1px solid rgba(232,223,208,0.16);
+    border-radius:16px;
+    padding:16px;
+    box-shadow:0 24px 60px -16px rgba(0,0,0,0.6);
+  }
+  .map-popover-arrow{
+    position:absolute;
+    width:14px; height:14px;
+    background:var(--cave-shadow-2);
+    border-left:1px solid rgba(232,223,208,0.16);
+    border-top:1px solid rgba(232,223,208,0.16);
+    transform:rotate(45deg);
+  }
+  .map-popover-title{
+    font-family:var(--font-mono);
+    font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
+    color:rgba(232,223,208,0.5);
+    margin-bottom:12px;
+  }
+  .map-popover-option{
+    display:flex; align-items:center; gap:10px;
+    width:100%;
+    padding:11px 12px;
+    margin-bottom:8px;
+    background:rgba(232,223,208,0.05);
+    border:1px solid rgba(232,223,208,0.12);
+    border-radius:10px;
+    color:var(--limestone);
+    font-family:var(--font-body);
+    font-size:14px; font-weight:500;
+    cursor:pointer;
+    transition:background .18s ease, border-color .18s ease, transform .12s ease;
+  }
+  .map-popover-option svg{
+    width:17px; height:17px; flex-shrink:0;
+    stroke:var(--bulb-amber-soft); fill:none; stroke-width:1.7;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  .map-popover-option:hover,
+  .map-popover-option:focus-visible{
+    background:rgba(217,168,89,0.14);
+    border-color:rgba(217,168,89,0.4);
+    transform:translateY(-1px);
+  }
+  .map-popover-cancel{
+    display:block;
+    width:100%;
+    padding:9px 12px;
+    margin-top:2px;
+    background:transparent;
+    border:none;
+    color:rgba(232,223,208,0.5);
+    font-family:var(--font-body);
+    font-size:13px;
+    cursor:pointer;
+    text-align:center;
+    transition:color .18s ease;
+  }
+  .map-popover-cancel:hover,
+  .map-popover-cancel:focus-visible{
+    color:var(--limestone);
+  }
+  @media (max-width: 480px){
+    .map-popover{
+      left:16px !important; right:16px !important;
+      width:auto !important;
+    }
+    .map-popover-arrow{ display:none; }
+  }
   .footer-bottom{
     display:flex; justify-content:space-between; align-items:center;
     padding-top:28px; flex-wrap:wrap; gap:12px;
@@ -797,18 +924,40 @@
         </div>
         <div class="footer-col">
           <h4>Find the cave</h4>
-          <p>
-            Shop 255-257, Laxmi Enclave 2,<br>
-            Opposite Gajera Road,<br>
-            Katargam, Surat,<br>
-            Gujarat 395004, India
-          </p>
-          <a href="" class="footer-contact-link" style="margin-top:6px;">
+          <button
+            type="button"
+            id="addressTrigger"
+            class="footer-address-btn"
+            data-address="Shop 255-257, Laxmi Enclave 2, Opposite Gajera Road, Katargam, Surat, Gujarat 395004, India"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="mapChoicePopover"
+          >
+            <svg class="footer-address-icon" viewBox="0 0 24 24"><path d="M12 22s-7-7.05-7-12a7 7 0 0 1 14 0c0 4.95-7 12-7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <span class="footer-address-text">
+              Shop 255-257, Laxmi Enclave 2,<br>
+              Opposite Gajera Road,<br>
+              Katargam, Surat,<br>
+              Gujarat 395004, India
+            </span>
+          </button>
+
+          <button
+            type="button"
+            id="phoneTrigger"
+            class="footer-contact-link footer-contact-btn"
+            style="margin-top:6px;"
+            data-phone="+916355714733"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-controls="phoneChoicePopover"
+          >
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.09 5.18 2 2 0 0 1 5.09 3h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 10.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
             +91 63557-14733
-          </a>
+          </button>
         </div>
         <div class="footer-col">
+
           <h4>Explore</h4>
           <a href="#menu">Full menu</a>
           <a href="#gallery">Photo gallery</a>
@@ -821,6 +970,48 @@
       </div>
     </div>
   </footer>
+
+  <!-- ============ MAP CHOICE POPOVER ============ -->
+  <div class="map-popover-backdrop" id="mapPopoverBackdrop" hidden></div>
+  <div
+    class="map-popover"
+    id="mapChoicePopover"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="mapPopoverTitle"
+    hidden
+  >
+    <div class="map-popover-arrow" id="mapPopoverArrow"></div>
+    <p class="map-popover-title" id="mapPopoverTitle">Open this address in</p>
+    <button type="button" class="map-popover-option" id="openGoogleMaps">
+      <svg viewBox="0 0 24 24"><path d="M12 22s-7-7.05-7-12a7 7 0 0 1 14 0c0 4.95-7 12-7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      Google Maps
+    </button>
+    <button type="button" class="map-popover-option" id="openAppleMaps">
+      <svg viewBox="0 0 24 24"><path d="M12 22s-7-7.05-7-12a7 7 0 0 1 14 0c0 4.95-7 12-7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+      Apple Maps
+    </button>
+    <button type="button" class="map-popover-cancel" id="mapPopoverCancel">Cancel</button>
+  </div>
+
+  <!-- ============ PHONE DIAL CONFIRM POPOVER ============ -->
+  <div class="map-popover-backdrop" id="phonePopoverBackdrop" hidden></div>
+  <div
+    class="map-popover"
+    id="phoneChoicePopover"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="phonePopoverTitle"
+    hidden
+  >
+    <div class="map-popover-arrow" id="phonePopoverArrow"></div>
+    <p class="map-popover-title" id="phonePopoverTitle">Call Cave Coffee?</p>
+    <button type="button" class="map-popover-option" id="callNumber">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.09 5.18 2 2 0 0 1 5.09 3h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 10.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
+      +91 63557-14733
+    </button>
+    <button type="button" class="map-popover-cancel" id="phonePopoverCancel">Cancel</button>
+  </div>
 
 <script>
   // ---------- Scroll nav background ----------
@@ -848,6 +1039,163 @@
       container.appendChild(b);
     }
   })();
+
+  // ---------- Address click -> choose Google Maps / Apple Maps ----------
+  // ---------- Reusable popover factory (positioning, focus trap, a11y) ----------
+  // Used by both the address "choose a map app" popover and the phone
+  // "confirm before dialing" popover, so the tested open/close/position
+  // logic lives in exactly one place instead of being duplicated.
+  function initPopoverTrigger(config){
+   try {
+    const trigger = document.getElementById(config.triggerId);
+    const popover = document.getElementById(config.popoverId);
+    const backdrop = document.getElementById(config.backdropId);
+    const arrow = document.getElementById(config.arrowId);
+    const cancelBtn = document.getElementById(config.cancelId);
+    const optionEls = config.optionIds.map(id => document.getElementById(id));
+    if (!trigger || !popover || !backdrop) return;
+    if (optionEls.some(el => !el)) return;
+
+    function positionPopover(){
+      const rect = trigger.getBoundingClientRect();
+      const popoverWidth = popover.offsetWidth || 240;
+      const margin = 12;
+
+      // Prefer opening below the trigger; flip above if there isn't room.
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const openAbove = spaceBelow < 220 && rect.top > 220;
+
+      let top = openAbove ? rect.top - popover.offsetHeight - margin : rect.bottom + margin;
+      top = Math.max(12, Math.min(top, window.innerHeight - popover.offsetHeight - 12));
+
+      let left = rect.left;
+      const maxLeft = window.innerWidth - popoverWidth - 12;
+      left = Math.max(12, Math.min(left, maxLeft));
+
+      popover.style.top = top + 'px';
+      popover.style.left = left + 'px';
+
+      if (arrow){
+        // Arrow points at the trigger; clamp so it never sits outside the card.
+        const arrowTarget = rect.left + rect.width / 2 - left - 7;
+        const arrowClamped = Math.max(14, Math.min(arrowTarget, popoverWidth - 28));
+        arrow.style.left = arrowClamped + 'px';
+        if (openAbove){
+          arrow.style.top = 'auto';
+          arrow.style.bottom = '-7px';
+          arrow.style.transform = 'rotate(225deg)';
+        } else {
+          arrow.style.bottom = 'auto';
+          arrow.style.top = '-7px';
+          arrow.style.transform = 'rotate(45deg)';
+        }
+      }
+    }
+
+    function openPopover(){
+      if (typeof config.onOpen === 'function') config.onOpen({ trigger, optionEls });
+
+      backdrop.hidden = false;
+      popover.hidden = false;
+      trigger.setAttribute('aria-expanded', 'true');
+      positionPopover();
+      // re-measure after layout settles (web fonts etc. can shift size slightly)
+      requestAnimationFrame(positionPopover);
+      optionEls[0].focus();
+
+      document.addEventListener('keydown', onKeydown);
+      window.addEventListener('resize', positionPopover, { passive:true });
+      window.addEventListener('scroll', positionPopover, { passive:true });
+    }
+
+    function closePopover(){
+      backdrop.hidden = true;
+      popover.hidden = true;
+      trigger.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('keydown', onKeydown);
+      window.removeEventListener('resize', positionPopover);
+      window.removeEventListener('scroll', positionPopover);
+      // Return focus to the button that opened the popover — this is always
+      // correct since the popover only ever opens from this one trigger,
+      // which is simpler and more reliable than tracking document.activeElement.
+      trigger.focus();
+    }
+
+    function onKeydown(e){
+      if (e.key === 'Escape'){
+        closePopover();
+        return;
+      }
+      // simple focus trap across the popover's buttons
+      if (e.key === 'Tab'){
+        const focusable = cancelBtn ? [...optionEls, cancelBtn] : optionEls;
+        const idx = focusable.indexOf(document.activeElement);
+        if (idx === -1) return;
+        e.preventDefault();
+        const next = e.shiftKey
+          ? focusable[(idx - 1 + focusable.length) % focusable.length]
+          : focusable[(idx + 1) % focusable.length];
+        next.focus();
+      }
+    }
+
+    trigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (popover.hidden) openPopover();
+      else closePopover();
+    });
+
+    backdrop.addEventListener('click', closePopover);
+    if (cancelBtn) cancelBtn.addEventListener('click', closePopover);
+
+    optionEls.forEach(btn => {
+      btn.addEventListener('click', () => {
+        config.onSelect(btn);
+        closePopover();
+      });
+    });
+   } catch(err){
+     console.warn('Popover (' + config.triggerId + ') could not start:', err);
+   }
+  }
+
+  // ---------- Address click -> choose Google Maps / Apple Maps ----------
+  initPopoverTrigger({
+    triggerId: 'addressTrigger',
+    popoverId: 'mapChoicePopover',
+    backdropId: 'mapPopoverBackdrop',
+    arrowId: 'mapPopoverArrow',
+    cancelId: 'mapPopoverCancel',
+    optionIds: ['openGoogleMaps', 'openAppleMaps'],
+    onOpen({ trigger, optionEls }){
+      const address = trigger.dataset.address || '';
+      const encoded = encodeURIComponent(address);
+      optionEls[0].dataset.href = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+      optionEls[1].dataset.href = `https://maps.apple.com/?q=${encoded}`;
+    },
+    onSelect(btn){
+      const href = btn.dataset.href;
+      if (href) window.open(href, '_blank', 'noopener');
+    },
+  });
+
+  // ---------- Phone click -> confirm before dialing ----------
+  initPopoverTrigger({
+    triggerId: 'phoneTrigger',
+    popoverId: 'phoneChoicePopover',
+    backdropId: 'phonePopoverBackdrop',
+    arrowId: 'phonePopoverArrow',
+    cancelId: 'phonePopoverCancel',
+    optionIds: ['callNumber'],
+    onOpen({ trigger, optionEls }){
+      const number = trigger.dataset.phone || '';
+      optionEls[0].dataset.href = `tel:${number}`;
+    },
+    onSelect(btn){
+      const href = btn.dataset.href;
+      if (href) window.location.href = href;
+    },
+  });
 
   // ---------- Menu data ----------
   const MENU = [
