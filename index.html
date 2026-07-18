@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cave Coffee — Carved into the everyday</title>
+  <link rel="icon" type="image/x-icon" href="/cave-logo-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -430,7 +431,7 @@
     transition:transform .5s ease, filter .5s ease;
     filter:saturate(0.94);
   }
-  .gallery a{ display:block; overflow:hidden; border-radius:10px; }
+  .gallery a{ display:block; overflow:hidden; border-radius:10px; cursor:pointer; }
   .gallery a:hover img{ transform:scale(1.06); filter:saturate(1.05) brightness(1.04); }
   .g-1{ grid-column:span 2; grid-row:span 2; }
   .g-2{ grid-column:span 2; grid-row:span 1; }
@@ -445,6 +446,75 @@
     .g-1,.g-5{ grid-column:span 2; grid-row:span 2; }
     .g-2,.g-6,.g-7{ grid-column:span 2; grid-row:span 1; }
     .g-3,.g-4{ grid-column:span 1; }
+  }
+
+  /* ============ LIGHTBOX ============ */
+  .lightbox{
+    position:fixed; inset:0; z-index:1000;
+    background:rgba(11,9,7,0.94);
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; visibility:hidden;
+    transition:opacity .3s ease, visibility .3s ease;
+  }
+  .lightbox.open{ opacity:1; visibility:visible; }
+  .lightbox-frame{
+    position:relative;
+    max-width:88vw; max-height:82vh;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .lightbox-frame img{
+    max-width:88vw; max-height:82vh;
+    width:auto; height:auto;
+    object-fit:contain;
+    border-radius:10px;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,0.6);
+    opacity:0;
+    transform:scale(0.97);
+    transition:opacity .25s ease, transform .25s ease;
+  }
+  .lightbox-frame img.show{ opacity:1; transform:scale(1); }
+  .lightbox-caption{
+    position:absolute; left:0; right:0; bottom:-38px;
+    text-align:center;
+    color:rgba(232,223,208,0.6);
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.04em;
+  }
+  .lightbox-btn{
+    position:absolute;
+    width:46px; height:46px;
+    border-radius:50%;
+    background:rgba(232,223,208,0.08);
+    border:1px solid rgba(232,223,208,0.22);
+    color:var(--limestone);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, transform .2s ease;
+    z-index:2;
+  }
+  .lightbox-btn svg{ width:20px; height:20px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+  .lightbox-btn:hover{ background:rgba(217,168,89,0.18); border-color:var(--bulb-amber-soft); transform:translateY(-50%) scale(1.06); }
+  .lightbox-prev{ left:-64px; top:50%; transform:translateY(-50%); }
+  .lightbox-prev:hover{ transform:translateY(-50%) scale(1.06); }
+  .lightbox-next{ right:-64px; top:50%; transform:translateY(-50%); }
+  .lightbox-next:hover{ transform:translateY(-50%) scale(1.06); }
+  .lightbox-close{
+    position:absolute; top:-56px; right:-8px;
+    transform:none;
+  }
+  .lightbox-close:hover{ transform:scale(1.06); }
+  .lightbox-counter{
+    position:absolute; top:-56px; left:-8px;
+    color:rgba(232,223,208,0.55);
+    font-family:var(--font-mono); font-size:12px; letter-spacing:0.06em;
+  }
+  @media (max-width:760px){
+    .lightbox-frame{ max-width:92vw; max-height:74vh; }
+    .lightbox-frame img{ max-width:92vw; max-height:74vh; }
+    .lightbox-prev{ left:4px; }
+    .lightbox-next{ right:4px; }
+    .lightbox-btn{ width:40px; height:40px; background:rgba(11,9,7,0.55); }
+    .lightbox-close{ top:-48px; right:0; }
+    .lightbox-counter{ top:-48px; left:0; }
   }
 
   /* ============ MENU ============ */
@@ -546,6 +616,12 @@
     gap:22px;
     align-items:start;
   }
+  .menu-masonry.single-col{
+    grid-template-columns:1fr;
+    max-width:640px;
+    margin:0 auto;
+  }
+  .menu-masonry.single-col .menu-column:last-child{ display:none; }
   .menu-column{ display:flex; flex-direction:column; gap:22px; }
 
   .menu-category{
@@ -658,6 +734,68 @@
     .cat-head{ flex-wrap:wrap; }
   }
 
+  /* ============ REVIEWS ============ */
+  .reviews{
+    background:var(--paper);
+    padding:90px 0 100px;
+    position:relative;
+  }
+  .reviews .section-head{ margin-bottom:44px; text-align:center; }
+  .reviews .section-head .section-eyebrow{ color:var(--stone-tan); justify-content:center; display:flex; align-items:center; gap:10px; }
+  .reviews .section-head .section-eyebrow::before{ content:''; width:24px; height:1px; background:var(--stone-tan); }
+  .reviews .section-head h2{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(30px,4vw,44px);
+    color:var(--ink);
+  }
+  .rating-summary{
+    display:flex; align-items:center; justify-content:center; gap:28px;
+    flex-wrap:wrap;
+    margin-top:20px;
+  }
+  .rating-badge{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--font-mono); font-size:13px; color:var(--ink-soft);
+  }
+  .rating-badge .stars{ color:var(--bulb-amber-soft); filter:saturate(1.4); letter-spacing:2px; }
+  .rating-badge b{ color:var(--ink); font-size:16px; }
+
+  .reviews-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+    margin-top:46px;
+  }
+  .review-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px;
+    box-shadow:0 18px 40px -22px rgba(22,18,15,0.25);
+  }
+  .review-card .stars{ color:var(--bulb-amber-soft); font-size:14px; letter-spacing:2px; }
+  .review-card p{
+    margin-top:14px; font-size:14.5px; line-height:1.65; color:var(--ink-soft);
+  }
+  .review-card .who{
+    margin-top:18px; display:flex; align-items:center; justify-content:space-between;
+    font-family:var(--font-mono); font-size:12px; color:var(--stone-tan);
+  }
+  @media (max-width:860px){ .reviews-grid{ grid-template-columns:1fr; } }
+
+  .reviews-cta{
+    text-align:center; margin-top:44px;
+  }
+  .reviews-cta a{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:13px;
+    color:var(--stone-umber);
+    border:1px solid var(--line);
+    padding:12px 22px; border-radius:100px;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .reviews-cta a:hover{ border-color:var(--stone-tan); color:var(--ink); }
+
   /* ============ FOOTER ============ */
   footer{
     background:var(--cave-shadow);
@@ -675,6 +813,20 @@
   .footer-brand p{
     color:rgba(232,223,208,0.6); font-size:14px; line-height:1.7; max-width:320px;
   }
+  .footer-social{
+    display:flex; gap:10px; margin-top:20px;
+  }
+  .footer-social a{
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line-dark);
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .2s ease, background .2s ease, transform .2s ease;
+  }
+  .footer-social a svg{
+    width:17px; height:17px; stroke:var(--limestone); fill:none; stroke-width:1.7;
+    stroke-linecap:round; stroke-linejoin:round;
+  }
+  .footer-social a:hover{ border-color:var(--bulb-amber-soft); background:rgba(217,168,89,0.1); transform:translateY(-2px); }
   .footer-col h4{
     font-family:var(--font-mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase;
     color:var(--bulb-amber-soft); margin-bottom:18px;
@@ -695,133 +847,6 @@
     stroke:currentColor; fill:none; stroke-width:1.7;
     stroke-linecap:round; stroke-linejoin:round;
     opacity:0.7;
-  }
-  .footer-contact-btn{
-    background:transparent;
-    border:none;
-    padding:6px 8px 6px 0;
-    margin-left:-2px;
-    border-radius:8px;
-    font-family:var(--font-body);
-    font-size:14.5px;
-    cursor:pointer;
-    text-align:left;
-  }
-  .footer-contact-btn:hover,
-  .footer-contact-btn:focus-visible{
-    background:rgba(217,168,89,0.08);
-  }
-
-  /* ---- Clickable address (opens the map-choice popover) ---- */
-  .footer-address-btn{
-    display:flex; align-items:flex-start; gap:9px;
-    width:100%;
-    text-align:left;
-    background:transparent;
-    border:none;
-    border-radius:10px;
-    padding:8px 10px 8px 0;
-    margin:0 0 4px -2px;
-    cursor:pointer;
-    font-family:var(--font-body);
-    color:rgba(232,223,208,0.72);
-    transition:color .2s ease, background .2s ease;
-  }
-  .footer-address-btn:hover,
-  .footer-address-btn:focus-visible{
-    color:var(--bulb-amber-soft);
-    background:rgba(217,168,89,0.08);
-  }
-  .footer-address-text{
-    font-size:14.5px; line-height:1.6;
-  }
-  .footer-address-icon{
-    width:16px; height:16px; flex-shrink:0;
-    margin-top:2px;
-    stroke:currentColor; fill:none; stroke-width:1.7;
-    stroke-linecap:round; stroke-linejoin:round;
-    opacity:0.65;
-  }
-
-  /* ---- Map choice popover ---- */
-  .map-popover-backdrop{
-    position:fixed; inset:0;
-    background:rgba(13,10,8,0.45);
-    z-index:998;
-  }
-  .map-popover{
-    position:fixed;
-    z-index:999;
-    width:240px;
-    background:var(--cave-shadow-2);
-    border:1px solid rgba(232,223,208,0.16);
-    border-radius:16px;
-    padding:16px;
-    box-shadow:0 24px 60px -16px rgba(0,0,0,0.6);
-  }
-  .map-popover-arrow{
-    position:absolute;
-    width:14px; height:14px;
-    background:var(--cave-shadow-2);
-    border-left:1px solid rgba(232,223,208,0.16);
-    border-top:1px solid rgba(232,223,208,0.16);
-    transform:rotate(45deg);
-  }
-  .map-popover-title{
-    font-family:var(--font-mono);
-    font-size:11px; letter-spacing:0.06em; text-transform:uppercase;
-    color:rgba(232,223,208,0.5);
-    margin-bottom:12px;
-  }
-  .map-popover-option{
-    display:flex; align-items:center; gap:10px;
-    width:100%;
-    padding:11px 12px;
-    margin-bottom:8px;
-    background:rgba(232,223,208,0.05);
-    border:1px solid rgba(232,223,208,0.12);
-    border-radius:10px;
-    color:var(--limestone);
-    font-family:var(--font-body);
-    font-size:14px; font-weight:500;
-    cursor:pointer;
-    transition:background .18s ease, border-color .18s ease, transform .12s ease;
-  }
-  .map-popover-option svg{
-    width:17px; height:17px; flex-shrink:0;
-    stroke:var(--bulb-amber-soft); fill:none; stroke-width:1.7;
-    stroke-linecap:round; stroke-linejoin:round;
-  }
-  .map-popover-option:hover,
-  .map-popover-option:focus-visible{
-    background:rgba(217,168,89,0.14);
-    border-color:rgba(217,168,89,0.4);
-    transform:translateY(-1px);
-  }
-  .map-popover-cancel{
-    display:block;
-    width:100%;
-    padding:9px 12px;
-    margin-top:2px;
-    background:transparent;
-    border:none;
-    color:rgba(232,223,208,0.5);
-    font-family:var(--font-body);
-    font-size:13px;
-    cursor:pointer;
-    text-align:center;
-    transition:color .18s ease;
-  }
-  .map-popover-cancel:hover,
-  .map-popover-cancel:focus-visible{
-    color:var(--limestone);
-  }
-  @media (max-width: 480px){
-    .map-popover{
-      left:16px !important; right:16px !important;
-      width:auto !important;
-    }
-    .map-popover-arrow{ display:none; }
   }
   .footer-bottom{
     display:flex; justify-content:space-between; align-items:center;
@@ -849,6 +874,7 @@
         <a href="#about">The Space</a>
         <a href="#gallery">Gallery</a>
         <a href="#menu">Menu</a>
+        <a href="#reviews">Reviews</a>
         <a href="#visit" class="nav-cta">Find Us</a>
       </div>
     </div>
@@ -913,17 +939,35 @@
         <h2>One room, carved into a dozen moods.</h2>
         <p class="lede">From quiet corner tables to the long communal slab in the back — no two seats here look at the same wall.</p>
       </div>
-      <div class="gallery">
-        <a class="g-1" href="cave1.png" target="_blank"><img src="cave1.png" alt="Wide view of the cave-carved main hall with hanging bulb lights and guests seated throughout"></a>
-        <a class="g-2" href="cave4.png" target="_blank"><img src="cave4.png" alt="Collage of seating nooks across the cafe"></a>
-        <a class="g-3" href="cave12.png" target="_blank"><img src="cave12.png" alt="String lights hanging from the carved stone ceiling"></a>
-        <a class="g-4" href="cave3.png" target="_blank"><img src="cave3.png" alt="Communal seating beneath the textured stone ceiling"></a>
-        <a class="g-5" href="cave6.png" target="_blank"><img src="cave6.png" alt="Sculpted stone archway opening into the main dining hall"></a>
-        <a class="g-6" href="cave10.png" target="_blank"><img src="cave10.png" alt="Bar area glimpsed through the sculpted archway"></a>
-        <a class="g-7" href="cave11.png" target="_blank"><img src="cave11.png" alt="A quiet corner table set against the cave's sculpted walls"></a>
+      <div class="gallery" id="galleryGrid">
+        <a class="g-1" data-index="0" href="cave1.png"><img src="cave1.png" alt="Wide view of the cave-carved main hall with hanging bulb lights and guests seated throughout"></a>
+        <a class="g-2" data-index="1" href="cave4.png"><img src="cave4.png" alt="Collage of seating nooks across the cafe"></a>
+        <a class="g-3" data-index="2" href="cave12.png"><img src="cave12.png" alt="String lights hanging from the carved stone ceiling"></a>
+        <a class="g-4" data-index="3" href="cave3.png"><img src="cave3.png" alt="Communal seating beneath the textured stone ceiling"></a>
+        <a class="g-5" data-index="4" href="cave6.png"><img src="cave6.png" alt="Sculpted stone archway opening into the main dining hall"></a>
+        <a class="g-6" data-index="5" href="cave10.png"><img src="cave10.png" alt="Bar area glimpsed through the sculpted archway"></a>
+        <a class="g-7" data-index="6" href="cave11.png"><img src="cave11.png" alt="A quiet corner table set against the cave's sculpted walls"></a>
       </div>
     </div>
   </section>
+
+  <!-- ============ LIGHTBOX ============ -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-frame">
+      <span class="lightbox-counter" id="lightboxCounter">1 / 7</span>
+      <button class="lightbox-btn lightbox-close" id="lightboxClose" aria-label="Exit gallery">
+        <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <button class="lightbox-btn lightbox-prev" id="lightboxPrev" aria-label="Previous photo">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <img id="lightboxImg" src="" alt="">
+      <button class="lightbox-btn lightbox-next" id="lightboxNext" aria-label="Next photo">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
 
   <!-- ============ MENU ============ -->
   <section class="menu-section" id="menu">
@@ -958,6 +1002,43 @@
     </div>
   </section>
 
+  <!-- ============ REVIEWS ============ -->
+  <section class="reviews" id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-eyebrow">What guests say</span>
+        <h2>Loved from Katargam to Google.</h2>
+        <div class="rating-summary">
+          <div class="rating-badge"><span class="stars">★★★★☆</span> <b>4.2</b>&nbsp;on Google</div>
+          <div class="rating-badge"><span class="stars">★★★★☆</span> <b>3.6</b>&nbsp;on Restaurant Guru</div>
+          <div class="rating-badge"><span class="stars">★★★★★</span> <b>4.5</b>&nbsp;on Zomato</div>
+        </div>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>Guests keep calling this one of the best coffee spots in the city, with a cozy vibe that's perfect for Katargam hangouts.</p>
+          <div class="who"><span>Zomato reviewer</span><span>Verified visit</span></div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★★</div>
+          <p>Visitors love settling in for hours here, whether it's a friend catch-up or a quiet coffee alone — the staff and setting make it easy to stay.</p>
+          <div class="who"><span>Restaurant Guru reviewer</span><span>Verified visit</span></div>
+        </div>
+        <div class="review-card">
+          <div class="stars">★★★★☆</div>
+          <p>The carved-cave theme and hanging lights get singled out often, alongside praise for the coffee and generally friendly service.</p>
+          <div class="who"><span>Justdial reviewer</span><span>Verified visit</span></div>
+        </div>
+      </div>
+
+      <div class="reviews-cta">
+        <a href="https://www.google.com/search?q=Cave+Coffee+Katargam+Surat+reviews" target="_blank" rel="noopener">Read more reviews on Google →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ FOOTER ============ -->
   <footer id="visit">
     <div class="wrap">
@@ -965,6 +1046,11 @@
         <div class="footer-brand">
           <a href="#top" class="brand"><span class="dot"></span>CAVE COFFEE</a>
           <p>A hand-carved coffeehouse built for the generation that drinks its coffee slow and photographs it slower. Espresso, cold brew, and a kitchen that doesn't stop at toast.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/cavecoffeesurat/" target="_blank" rel="noopener" aria-label="Cave Coffee on Instagram">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+            </a>
+          </div>
         </div>
         <div class="footer-col">
           <h4>Hours</h4>
@@ -973,44 +1059,23 @@
         </div>
         <div class="footer-col">
           <h4>Find the cave</h4>
-          <button
-            type="button"
-            id="addressTrigger"
-            class="footer-address-btn"
-            data-address="Shop 255-257, Laxmi Enclave 2, Opposite Gajera Road, Katargam, Surat, Gujarat 395004, India"
-            aria-haspopup="true"
-            aria-expanded="false"
-            aria-controls="mapChoicePopover"
-          >
-            <svg class="footer-address-icon" viewBox="0 0 24 24"><path d="M12 22s-7-7.05-7-12a7 7 0 0 1 14 0c0 4.95-7 12-7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-            <span class="footer-address-text">
-              Shop 255-257, Laxmi Enclave 2,<br>
-              Opposite Gajera Road,<br>
-              Katargam, Surat,<br>
-              Gujarat 395004, India
-            </span>
-          </button>
-
-          <button
-            type="button"
-            id="phoneTrigger"
-            class="footer-contact-link footer-contact-btn"
-            style="margin-top:6px;"
-            data-phone="+916355714733"
-            aria-haspopup="true"
-            aria-expanded="false"
-            aria-controls="phoneChoicePopover"
-          >
+          <p>
+            Shop 255-257, Laxmi Enclave 2,<br>
+            Opposite Gajera Road,<br>
+            Katargam, Surat,<br>
+            Gujarat 395004, India
+          </p>
+          <a href="" class="footer-contact-link" style="margin-top:6px;">
             <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.09 5.18 2 2 0 0 1 5.09 3h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 10.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
             +91 63557-14733
-          </button>
+          </a>
         </div>
         <div class="footer-col">
-
           <h4>Explore</h4>
           <a href="#menu">Full menu</a>
           <a href="#gallery">Photo gallery</a>
           <a href="#about">Our story</a>
+          <a href="https://www.instagram.com/cavecoffeesurat/" target="_blank" rel="noopener">Instagram</a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -1019,48 +1084,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- ============ MAP CHOICE POPOVER ============ -->
-  <div class="map-popover-backdrop" id="mapPopoverBackdrop" hidden></div>
-  <div
-    class="map-popover"
-    id="mapChoicePopover"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="mapPopoverTitle"
-    hidden
-  >
-    <div class="map-popover-arrow" id="mapPopoverArrow"></div>
-    <p class="map-popover-title" id="mapPopoverTitle">Open this address in</p>
-    <button type="button" class="map-popover-option" id="openGoogleMaps">
-      <svg viewBox="0 0 24 24"><path d="M12 22s-7-7.05-7-12a7 7 0 0 1 14 0c0 4.95-7 12-7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-      Google Maps
-    </button>
-    <button type="button" class="map-popover-option" id="openAppleMaps">
-      <svg viewBox="0 0 24 24"><path d="M12 22s-7-7.05-7-12a7 7 0 0 1 14 0c0 4.95-7 12-7 12Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-      Apple Maps
-    </button>
-    <button type="button" class="map-popover-cancel" id="mapPopoverCancel">Cancel</button>
-  </div>
-
-  <!-- ============ PHONE DIAL CONFIRM POPOVER ============ -->
-  <div class="map-popover-backdrop" id="phonePopoverBackdrop" hidden></div>
-  <div
-    class="map-popover"
-    id="phoneChoicePopover"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="phonePopoverTitle"
-    hidden
-  >
-    <div class="map-popover-arrow" id="phonePopoverArrow"></div>
-    <p class="map-popover-title" id="phonePopoverTitle">Call Cave Coffee?</p>
-    <button type="button" class="map-popover-option" id="callNumber">
-      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3.09 5.18 2 2 0 0 1 5.09 3h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L9.09 10.9a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
-      +91 63557-14733
-    </button>
-    <button type="button" class="map-popover-cancel" id="phonePopoverCancel">Cancel</button>
-  </div>
 
 <script>
   // ---------- Scroll nav background ----------
@@ -1089,162 +1112,70 @@
     }
   })();
 
-  // ---------- Address click -> choose Google Maps / Apple Maps ----------
-  // ---------- Reusable popover factory (positioning, focus trap, a11y) ----------
-  // Used by both the address "choose a map app" popover and the phone
-  // "confirm before dialing" popover, so the tested open/close/position
-  // logic lives in exactly one place instead of being duplicated.
-  function initPopoverTrigger(config){
-   try {
-    const trigger = document.getElementById(config.triggerId);
-    const popover = document.getElementById(config.popoverId);
-    const backdrop = document.getElementById(config.backdropId);
-    const arrow = document.getElementById(config.arrowId);
-    const cancelBtn = document.getElementById(config.cancelId);
-    const optionEls = config.optionIds.map(id => document.getElementById(id));
-    if (!trigger || !popover || !backdrop) return;
-    if (optionEls.some(el => !el)) return;
+  // ---------- Gallery lightbox ----------
+  (function initLightbox(){
+    const galleryLinks = Array.from(document.querySelectorAll('#galleryGrid a'));
+    const photos = galleryLinks.map(a => ({
+      src: a.getAttribute('href'),
+      alt: a.querySelector('img')?.getAttribute('alt') || ''
+    }));
 
-    function positionPopover(){
-      const rect = trigger.getBoundingClientRect();
-      const popoverWidth = popover.offsetWidth || 240;
-      const margin = 12;
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightboxImg');
+    const lbCaption = document.getElementById('lightboxCaption');
+    const lbCounter = document.getElementById('lightboxCounter');
+    const btnClose = document.getElementById('lightboxClose');
+    const btnPrev = document.getElementById('lightboxPrev');
+    const btnNext = document.getElementById('lightboxNext');
 
-      // Prefer opening below the trigger; flip above if there isn't room.
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const openAbove = spaceBelow < 220 && rect.top > 220;
+    let current = 0;
 
-      let top = openAbove ? rect.top - popover.offsetHeight - margin : rect.bottom + margin;
-      top = Math.max(12, Math.min(top, window.innerHeight - popover.offsetHeight - 12));
-
-      let left = rect.left;
-      const maxLeft = window.innerWidth - popoverWidth - 12;
-      left = Math.max(12, Math.min(left, maxLeft));
-
-      popover.style.top = top + 'px';
-      popover.style.left = left + 'px';
-
-      if (arrow){
-        // Arrow points at the trigger; clamp so it never sits outside the card.
-        const arrowTarget = rect.left + rect.width / 2 - left - 7;
-        const arrowClamped = Math.max(14, Math.min(arrowTarget, popoverWidth - 28));
-        arrow.style.left = arrowClamped + 'px';
-        if (openAbove){
-          arrow.style.top = 'auto';
-          arrow.style.bottom = '-7px';
-          arrow.style.transform = 'rotate(225deg)';
-        } else {
-          arrow.style.bottom = 'auto';
-          arrow.style.top = '-7px';
-          arrow.style.transform = 'rotate(45deg)';
-        }
-      }
+    function show(index){
+      current = (index + photos.length) % photos.length;
+      const p = photos[current];
+      lbImg.classList.remove('show');
+      lbImg.src = p.src;
+      lbImg.alt = p.alt;
+      lbCaption.textContent = p.alt;
+      lbCounter.textContent = (current + 1) + ' / ' + photos.length;
+      requestAnimationFrame(() => lbImg.classList.add('show'));
     }
 
-    function openPopover(){
-      if (typeof config.onOpen === 'function') config.onOpen({ trigger, optionEls });
-
-      backdrop.hidden = false;
-      popover.hidden = false;
-      trigger.setAttribute('aria-expanded', 'true');
-      positionPopover();
-      // re-measure after layout settles (web fonts etc. can shift size slightly)
-      requestAnimationFrame(positionPopover);
-      optionEls[0].focus();
-
-      document.addEventListener('keydown', onKeydown);
-      window.addEventListener('resize', positionPopover, { passive:true });
-      window.addEventListener('scroll', positionPopover, { passive:true });
+    function open(index){
+      show(index);
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
     }
 
-    function closePopover(){
-      backdrop.hidden = true;
-      popover.hidden = true;
-      trigger.setAttribute('aria-expanded', 'false');
-      document.removeEventListener('keydown', onKeydown);
-      window.removeEventListener('resize', positionPopover);
-      window.removeEventListener('scroll', positionPopover);
-      // Return focus to the button that opened the popover — this is always
-      // correct since the popover only ever opens from this one trigger,
-      // which is simpler and more reliable than tracking document.activeElement.
-      trigger.focus();
+    function close(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
     }
 
-    function onKeydown(e){
-      if (e.key === 'Escape'){
-        closePopover();
-        return;
-      }
-      // simple focus trap across the popover's buttons
-      if (e.key === 'Tab'){
-        const focusable = cancelBtn ? [...optionEls, cancelBtn] : optionEls;
-        const idx = focusable.indexOf(document.activeElement);
-        if (idx === -1) return;
+    galleryLinks.forEach((a, i) => {
+      a.addEventListener('click', (e) => {
         e.preventDefault();
-        const next = e.shiftKey
-          ? focusable[(idx - 1 + focusable.length) % focusable.length]
-          : focusable[(idx + 1) % focusable.length];
-        next.focus();
-      }
-    }
-
-    trigger.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (popover.hidden) openPopover();
-      else closePopover();
-    });
-
-    backdrop.addEventListener('click', closePopover);
-    if (cancelBtn) cancelBtn.addEventListener('click', closePopover);
-
-    optionEls.forEach(btn => {
-      btn.addEventListener('click', () => {
-        config.onSelect(btn);
-        closePopover();
+        open(i);
       });
     });
-   } catch(err){
-     console.warn('Popover (' + config.triggerId + ') could not start:', err);
-   }
-  }
 
-  // ---------- Address click -> choose Google Maps / Apple Maps ----------
-  initPopoverTrigger({
-    triggerId: 'addressTrigger',
-    popoverId: 'mapChoicePopover',
-    backdropId: 'mapPopoverBackdrop',
-    arrowId: 'mapPopoverArrow',
-    cancelId: 'mapPopoverCancel',
-    optionIds: ['openGoogleMaps', 'openAppleMaps'],
-    onOpen({ trigger, optionEls }){
-      const address = trigger.dataset.address || '';
-      const encoded = encodeURIComponent(address);
-      optionEls[0].dataset.href = `https://www.google.com/maps/search/?api=1&query=${encoded}`;
-      optionEls[1].dataset.href = `https://maps.apple.com/?q=${encoded}`;
-    },
-    onSelect(btn){
-      const href = btn.dataset.href;
-      if (href) window.open(href, '_blank', 'noopener');
-    },
-  });
+    btnClose.addEventListener('click', close);
+    btnPrev.addEventListener('click', () => show(current - 1));
+    btnNext.addEventListener('click', () => show(current + 1));
 
-  // ---------- Phone click -> confirm before dialing ----------
-  initPopoverTrigger({
-    triggerId: 'phoneTrigger',
-    popoverId: 'phoneChoicePopover',
-    backdropId: 'phonePopoverBackdrop',
-    arrowId: 'phonePopoverArrow',
-    cancelId: 'phonePopoverCancel',
-    optionIds: ['callNumber'],
-    onOpen({ trigger, optionEls }){
-      const number = trigger.dataset.phone || '';
-      optionEls[0].dataset.href = `tel:${number}`;
-    },
-    onSelect(btn){
-      const href = btn.dataset.href;
-      if (href) window.location.href = href;
-    },
-  });
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+  })();
 
   // ---------- Menu data ----------
   const MENU = [
@@ -1534,6 +1465,7 @@
 
   const masonry = document.createElement('div');
   masonry.className = 'menu-masonry';
+  masonry.id = 'menuMasonry';
   const colLeft = document.createElement('div');
   colLeft.className = 'menu-column';
   const colRight = document.createElement('div');
@@ -1614,20 +1546,43 @@
 
   // ---------- Filtering ----------
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const categories = document.querySelectorAll('.menu-category');
+  const categories = Array.from(document.querySelectorAll('.menu-category'));
+  const menuMasonry = document.getElementById('menuMasonry');
+
+  // Remember each category's original column so "Everything" can
+  // restore the balanced two-column layout.
+  categories.forEach(cat => {
+    cat.dataset.homeCol = cat.parentElement === colLeft ? 'left' : 'right';
+  });
+  const originalOrder = categories.slice();
 
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const f = btn.dataset.filter;
-      categories.forEach(cat => {
-        if (f === 'all' || cat.dataset.filter === f) {
+
+      if (f === 'all') {
+        // Restore original two-column balanced layout.
+        menuMasonry.classList.remove('single-col');
+        originalOrder.forEach(cat => {
           cat.classList.remove('hidden');
-        } else {
-          cat.classList.add('hidden');
-        }
-      });
+          const home = cat.dataset.homeCol === 'left' ? colLeft : colRight;
+          home.appendChild(cat);
+        });
+      } else {
+        // Single column: pull every matching category into the left
+        // column, in menu order, and hide the rest.
+        menuMasonry.classList.add('single-col');
+        originalOrder.forEach(cat => {
+          if (cat.dataset.filter === f) {
+            cat.classList.remove('hidden');
+            colLeft.appendChild(cat);
+          } else {
+            cat.classList.add('hidden');
+          }
+        });
+      }
     });
   });
 </script>
