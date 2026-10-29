@@ -1726,8 +1726,7 @@ p{text-wrap:pretty}
 /* ================================================================
    UPGRADE LAYER — runs after the menu is built
    ================================================================ */
-/* cave-upgrade.js — load with <script src="cave-upgrade.js" defer></script> before </body>
-   No scroll listeners, no rAF loops without a stop condition, reads batched before writes. */
+/* Upgrade layer: no scroll listeners, no rAF loops without a stop condition, reads batched before writes. */
 (() => {
   'use strict';
   const $  = (s, r = document) => r.querySelector(s);
