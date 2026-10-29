@@ -862,6 +862,148 @@
     .footer-brand{ grid-column:span 1; }
   }
 
+/* ================================================================
+   UPGRADE LAYER (Cavern Ember) — overrides above, motion = transform/opacity only
+   ================================================================ */
+/* cave-upgrade.css — load AFTER the page's own <style>
+   Theme: "Cavern Ember" (your palette, kept) + compositor-only motion + responsive fixes */
+
+:root{
+  --nav-h:68px;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --gold:#C89B3C; --gold-hi:#E6C66A;
+  --stone-tan:#6A5539;               /* was #8B7355 (3.4:1) → 6:1 on paper */
+}
+html{scroll-padding-top:calc(var(--nav-h) + 8px)}
+h1,h2,h3{text-wrap:balance}
+p{text-wrap:pretty}
+
+/* ---------- skip link + scroll progress ---------- */
+.skip{position:fixed;left:12px;top:12px;z-index:300;translate:0 -90px;background:var(--bulb-amber);color:#1A1210;padding:10px 18px;border-radius:100px;font-weight:600;font-size:14px;transition:translate .25s var(--ease)}
+.skip:focus{translate:0 0}
+.scroll-progress{display:none}
+
+/* ---------- NAV: fade a pseudo-layer instead of animating background/backdrop-filter ---------- */
+.topnav.scrolled{background:none;backdrop-filter:none;box-shadow:none}
+.topnav::before{content:"";position:absolute;inset:0;background:rgba(22,18,15,.95);box-shadow:0 1px 0 var(--line-dark);opacity:0;transition:opacity .35s var(--ease);pointer-events:none}
+.topnav.scrolled::before,.topnav.menu-open::before{opacity:1}
+.topnav-inner{position:relative;min-height:var(--nav-h);padding-top:0;padding-bottom:0}
+.nav-links a{position:relative;padding:6px 0}
+.nav-links a.nav-cta{padding:10px 18px;min-height:44px;display:inline-flex;align-items:center}
+.nav-links a:not(.nav-cta)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--bulb-amber-soft);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.nav-links a.active{opacity:1}
+.nav-links a.active::after,.nav-links a:not(.nav-cta):hover::after{transform:scaleX(1)}
+.nav-toggle{display:none;width:44px;height:44px;margin-right:-10px;background:none;border:0;color:var(--limestone);cursor:pointer;align-items:center;justify-content:center}
+.bars,.bars::before{display:block;width:22px;height:2px;background:currentColor;border-radius:2px;transition:transform .35s var(--ease)}
+.bars{position:relative;transform:translateY(-4px)}
+.bars::before{content:"";position:absolute;top:8px;left:0}
+.menu-open .bars{transform:translateY(4px) rotate(45deg)}
+.menu-open .bars::before{transform:translateY(-8px) rotate(90deg)}
+
+@media (max-width:760px){
+  .nav-toggle{display:inline-flex}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:6px 24px 28px;background:rgba(22,18,15,.97);border-bottom:1px solid var(--line-dark);max-height:calc(100vh - var(--nav-h));max-height:calc(100dvh - var(--nav-h));overflow:auto;opacity:0;visibility:hidden;translate:0 -10px;transition:opacity .3s var(--ease),translate .3s var(--ease),visibility .3s}
+  .menu-open .nav-links{opacity:1;visibility:visible;translate:0 0}
+  .nav-links a:not(.nav-cta){display:flex;align-items:center;min-height:52px;margin-left:0;font-size:17px;opacity:.92;border-bottom:1px solid var(--line-dark)}
+  .nav-links a:not(.nav-cta)::after{display:none}
+  .nav-links a.nav-cta{display:flex;justify-content:center;margin:18px 0 0;min-height:48px}
+}
+
+/* ---------- HERO: remove paint-heavy loops; keep transform/opacity only ---------- */
+.hero{min-height:100vh;min-height:100svh;animation:none;background-size:100% 100%}
+.hero-bg{mix-blend-mode:normal;opacity:.55;will-change:transform}
+.hero-aura{filter:none;mix-blend-mode:normal;will-change:transform,opacity}
+@keyframes auraShift{0%,100%{transform:translate(0,0) scale(1);opacity:.5}50%{transform:translate(2%,-3%) scale(1.08);opacity:.72}}
+.hero.is-off,.hero.is-off *,.hero.is-off ::after{animation-play-state:paused!important}
+.hero h1{font-size:clamp(40px,9.5vw,112px)}
+
+/* signature moment: bulbs lower into place, then sway + flicker */
+.bulb.sway{animation:bulbDrop 1.4s var(--ease) both,sway 7s ease-in-out infinite;animation-delay:var(--drop-delay,0s),var(--sway-delay,0s)!important}
+@keyframes bulbDrop{from{translate:0 -130%}}
+
+/* button pulse: scale/opacity ring instead of animating box-shadow */
+.btn{min-height:48px;justify-content:center}
+.btn:active{transform:scale(.97)}
+.btn-primary{position:relative;isolation:isolate;animation:none}
+.btn-primary::after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;border:2px solid var(--bulb-amber);pointer-events:none;animation:ring 3.2s ease-out infinite}
+.btn-primary:hover::after{animation-play-state:paused}
+@keyframes ring{0%{transform:scale(1);opacity:.55}70%,100%{transform:scale(1.2,1.5);opacity:0}}
+@media (max-width:480px){.hero-actions .btn{flex:1 1 100%}}
+
+/* ---------- INTRO ---------- */
+.intro-photos{height:clamp(280px,44vw,400px)}
+.intro-stats{gap:28px 44px}
+.intro-stats>div{margin-right:0}
+.stat-num{font-variant-numeric:tabular-nums}
+.stat-label{font-size:12px}
+
+/* ---------- GALLERY: transform-only hover ---------- */
+.gallery img{filter:none;transition:transform .7s var(--ease)}
+.gallery a:hover img{filter:none;transform:scale(1.05)}
+.gallery a:active img{transform:scale(1.02)}
+@media (hover:none){.gallery a:hover img{transform:none}}
+
+/* ---------- LIGHTBOX ---------- */
+.lightbox{overscroll-behavior:contain;touch-action:pan-y pinch-zoom}
+.lightbox-btn{width:48px;height:48px}
+@media (max-width:1000px){
+  .lightbox-prev{left:8px}.lightbox-next{right:8px}
+  .lightbox-btn{background:rgba(11,9,7,.6)}
+}
+
+/* ---------- MENU ---------- */
+.menu-section{overflow:clip}                 /* overflow:hidden was breaking position:sticky */
+.menu-filters{top:var(--nav-h);background:rgba(15,15,15,.96);backdrop-filter:none;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.filter-btn{min-height:44px;padding:10px 18px;font-size:13px;scroll-snap-align:center;transition:background .25s,border-color .25s,color .25s,transform .2s}
+.filter-btn:active{transform:scale(.96)}
+
+/* cards: no backdrop-filter x19, no scale/box-shadow animation → opacity-faded glow + translate */
+.menu-category{backdrop-filter:none;-webkit-backdrop-filter:none;transition:transform .45s var(--ease)}
+.menu-category::after{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(200,155,60,.6),inset 0 0 46px rgba(200,155,60,.14);opacity:0;transition:opacity .35s}
+.menu-category:hover{transform:none;border-color:rgba(200,155,60,.3);box-shadow:0 15px 40px rgba(0,0,0,.35)}
+@media (hover:hover){
+  .menu-category:hover{transform:translateY(-4px)}
+  .menu-category:hover::after{opacity:1}
+  .item-name{transition:color .2s}
+  .menu-item:hover .item-name{color:var(--gold-hi)}
+  .review-card:hover{transform:translateY(-4px)}
+}
+.review-card{transition:transform .4s var(--ease)}
+.cat-head h3{white-space:normal}
+.item-price{flex-shrink:0}
+.item-desc{font-size:13px}
+@media (max-width:700px){.menu-masonry,.menu-column{gap:16px}}
+@media (max-width:480px){.menu-category{padding:22px 18px 14px}.cat-head{gap:12px}}
+
+/* ---------- FOOTER ---------- */
+.footer-col a{padding:3px 0}
+.footer-social a{width:44px;height:44px}
+
+/* ---------- REVEALS: one-shot, transform/opacity only (individual `translate`/`scale` props never fight hover transforms) ---------- */
+.reveal:not(.in){opacity:0}
+.reveal.in{animation:rise .8s var(--ease) var(--d,0ms) both}
+.reveal.pop.in{animation-name:pop}
+.menu-category.flt{animation:fltIn .55s var(--ease) calc(var(--k,0)*60ms) both}
+@keyframes rise{from{opacity:0;translate:0 20px}}
+@keyframes pop{from{opacity:0;scale:.94}}
+@keyframes fltIn{from{opacity:0;translate:0 16px}}
+
+/* ---------- Scroll-driven motion (no JS scroll listeners) where supported ---------- */
+@supports (animation-timeline:scroll()){
+  .scroll-progress{display:block;position:fixed;top:0;left:0;right:0;height:2px;z-index:101;background:linear-gradient(90deg,var(--theme-ember),var(--gold-hi));transform-origin:0 50%;transform:scaleX(0);animation:prog linear both;animation-timeline:scroll(root)}
+  .hero-content{animation:heroOut linear both;animation-timeline:scroll(root);animation-range:0 70vh}
+}
+@keyframes prog{to{transform:scaleX(1)}}
+@keyframes heroOut{to{opacity:0;translate:0 -48px}}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  .reveal:not(.in){opacity:1}
+  .bulb,.bulb::after,.hero-bg,.hero-aura,.hero-content,.scroll-progress,.btn-primary::after{animation:none!important}
+  .btn-primary::after{display:none}
+}
+
+
 </style>
 </head>
 <body>
@@ -1086,13 +1228,6 @@
   </footer>
 
 <script>
-  // ---------- Scroll nav background ----------
-  const topnav = document.getElementById('topnav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 40) topnav.classList.add('scrolled');
-    else topnav.classList.remove('scrolled');
-  }, { passive:true });
-
   // ---------- Hero bulb string (signature element) ----------
   (function buildBulbs(){
     const container = document.getElementById('bulbString');
@@ -1585,6 +1720,174 @@
       }
     });
   });
+</script>
+
+<script>
+/* ================================================================
+   UPGRADE LAYER — runs after the menu is built
+   ================================================================ */
+/* cave-upgrade.js — load with <script src="cave-upgrade.js" defer></script> before </body>
+   No scroll listeners, no rAF loops without a stop condition, reads batched before writes. */
+(() => {
+  'use strict';
+  const $  = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const topnav = $('#topnav');
+  const hero = $('.hero');
+
+  /* ---- helpers injected once: skip link, scroll-progress bar, nav sentinel ---- */
+  document.body.prepend(Object.assign(document.createElement('a'), { className: 'skip', href: '#about', textContent: 'Skip to content' }));
+  const prog = document.createElement('div');
+  prog.className = 'scroll-progress'; prog.setAttribute('aria-hidden', 'true');
+  document.body.prepend(prog);
+
+  const sentinel = document.createElement('div');
+  sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:40px;pointer-events:none';
+  document.body.prepend(sentinel);
+  new IntersectionObserver(([e]) => topnav.classList.toggle('scrolled', !e.isIntersecting)).observe(sentinel);
+
+  /* ---- mobile nav ---- */
+  const links = $('.nav-links');
+  links.id = 'navLinks';
+  const toggle = document.createElement('button');
+  toggle.className = 'nav-toggle'; toggle.type = 'button';
+  toggle.setAttribute('aria-controls', 'navLinks');
+  toggle.innerHTML = '<span class="bars"></span>';
+  links.after(toggle);
+  const setMenu = open => {
+    topnav.classList.toggle('menu-open', open);
+    toggle.setAttribute('aria-expanded', open);
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+  setMenu(false);
+  toggle.addEventListener('click', () => setMenu(!topnav.classList.contains('menu-open')));
+  links.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  matchMedia('(min-width:761px)').addEventListener('change', e => e.matches && setMenu(false));
+
+  /* ---- active section link + pause hero motion off-screen ---- */
+  const map = new Map($$('.nav-links a[href^="#"]:not(.nav-cta)').map(a => [a.getAttribute('href').slice(1), a]));
+  const clear = () => map.forEach(a => a.classList.remove('active'));
+  const secIO = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    clear(); map.get(e.target.id)?.classList.add('active');
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  map.forEach((_, id) => { const s = document.getElementById(id); s && secIO.observe(s); });
+  if (hero) new IntersectionObserver(([e]) => {
+    hero.classList.toggle('is-off', !e.isIntersecting);
+    if (e.isIntersecting) clear();
+  }).observe(hero);
+
+  /* ---- bulbs: staggered drop-in (delays consumed by CSS custom properties) ---- */
+  $$('.bulb').forEach((b, i) => {
+    b.style.setProperty('--drop-delay', (0.15 + i * 0.07) + 's');
+    b.style.setProperty('--sway-delay', (i * 0.35) + 's');
+  });
+
+  /* ---- images: lazy + async decode (lightbox image is set dynamically) ---- */
+  $$('img').forEach(img => { img.decoding = 'async'; if (!img.closest('.lightbox')) img.loading = 'lazy'; });
+
+  /* ---- one-shot reveals ---- */
+  const io = new IntersectionObserver((es, o) => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); }
+  }), { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  const reveal = (sel, { pop = false, mod = 4 } = {}) => $$(sel).forEach((el, i) => {
+    el.classList.add('reveal'); if (pop) el.classList.add('pop');
+    el.style.setProperty('--d', (i % mod) * 70 + 'ms');
+    io.observe(el);
+  });
+  if (!reduce) {
+    reveal('.intro .section-eyebrow, .intro h2, .intro-stats > div');
+    reveal('.intro-photos img', { pop: true });
+    reveal('.space .section-head > *');
+    reveal('.gallery a', { pop: true, mod: 3 });
+    reveal('.menu-head > *');
+    reveal('.menu-category', { mod: 2 });
+    reveal('.reviews .section-head > *');
+    reveal('.review-card', { mod: 3 });
+    reveal('.reviews-cta');
+    reveal('.footer-grid > *');
+  }
+
+  /* ---- stat count-up (fixed duration, stops itself) ---- */
+  if (!reduce) $$('.stat-num').forEach(el => {
+    const m = el.textContent.trim().match(/^(\d+)(\D*)$/);
+    if (!m || !+m[1]) return;
+    const to = +m[1], suf = m[2];
+    el.style.minWidth = el.textContent.trim().length + 'ch';
+    el.textContent = '0' + suf;
+    new IntersectionObserver(([e], o) => {
+      if (!e.isIntersecting) return;
+      o.disconnect();
+      const t0 = performance.now(), d = 1400;
+      const tick = t => {
+        const p = Math.min((t - t0) / d, 1);
+        el.textContent = Math.round(to * (1 - Math.pow(1 - p, 4))) + suf;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }).observe(el);
+  });
+
+  /* ---- menu filters: centre active pill, stagger cards in, keep list in view ---- */
+  const filterBar = $('#filterBar');
+  const cats = $$('.menu-category');
+  filterBar?.addEventListener('click', e => {
+    const b = e.target.closest('.filter-btn');
+    if (!b) return;
+    const list = $('#menuContainer');
+    const target = list.getBoundingClientRect().top + scrollY - 68 - filterBar.offsetHeight - 16;   // read
+    b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    if (scrollY > target) scrollTo({ top: target, behavior: reduce ? 'auto' : 'smooth' });
+    if (reduce) return;
+    const visible = cats.filter(c => !c.classList.contains('hidden'));
+    cats.forEach(c => { c.classList.add('in'); c.classList.remove('flt'); });                           // write
+    void filterBar.offsetWidth;                                                                         // one reflow, restarts animation
+    visible.forEach((c, i) => { c.style.setProperty('--k', Math.min(i, 8)); c.classList.add('flt'); });
+  });
+
+  /* ---- lightbox: dialog semantics, focus handling, swipe, neighbour preload ---- */
+  const lb = $('#lightbox');
+  if (lb) {
+    const img = $('#lightboxImg'), close = $('#lightboxClose'), prev = $('#lightboxPrev'), next = $('#lightboxNext');
+    const hrefs = $$('#galleryGrid a').map(a => a.getAttribute('href'));
+    let opener = null, active = false;
+    lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Photo gallery');
+
+    new MutationObserver(() => {
+      const open = lb.classList.contains('open');
+      if (open && !active) { active = true; opener = document.activeElement; setTimeout(() => close.focus({ preventScroll: true }), 60); }
+      else if (!open && active) { active = false; opener?.focus?.({ preventScroll: true }); }
+    }).observe(lb, { attributes: true, attributeFilter: ['class'] });
+
+    new MutationObserver(() => {
+      const i = hrefs.indexOf(img.getAttribute('src'));
+      if (i < 0) return;
+      [i - 1, i + 1].forEach(j => { new Image().src = hrefs[(j + hrefs.length) % hrefs.length]; });
+    }).observe(img, { attributes: true, attributeFilter: ['src'] });
+
+    lb.addEventListener('keydown', e => {
+      if (e.key !== 'Tab') return;
+      const f = [close, prev, next], i = f.indexOf(document.activeElement);
+      e.preventDefault();
+      f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+    });
+
+    let x0 = null;
+    lb.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) (dx < 0 ? next : prev).click();
+    }, { passive: true });
+  }
+
+  /* ---- footer phone link had an empty href ---- */
+  const tel = $('.footer-contact-link');
+  if (tel && !tel.getAttribute('href')) tel.href = 'tel:' + tel.textContent.replace(/[^\d+]/g, '');
+})();
+
 </script>
 
 </body>
